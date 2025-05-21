@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block head %}
+    <title>{{title}}</title>
+{% endblock %}
+{% block body %}
+<div>
+    <h1>Random image from r/{{subreddit}}</h1>
+    <h2>{{title}}</h2>
+    <img src="{{meme}}">
+</div>
+<div>
+    <a style="color: blue;width: 100%;" href="{{link}}">Link to post</a>
+</div>
+{% endblock %}
