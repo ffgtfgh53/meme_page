@@ -3,14 +3,15 @@
     <title>{{title}}</title>
 {% endblock %}
 {% block body %}
-<div>
-    <h1>Random image from r/{{subreddit}}</h1>
+<div class="main">
+    <h1>Random post from r/{{subreddit}}</h1>
     <h2>{{title}}</h2>
-    <img src="{{meme}}">
+    {% block meme %}
+    <img src="{{meme}}" style="max-width: 90vw; max-height: 70vh;">
+    {% endblock %}
 </div>
-<div>
-    <a style="color: blue;width: 100%;" href="{{link}}">Link to post</a>
-</div>
+<a style="color: #0000EE;width: 100%;margin: 10%;" href="{{link}}">Link to post</a>
+<a style="color: #0000EE;width: 100%;margin: 10%;" href="javascript:location.reload()">New post</a>
 {% for text in extra %}
 <p>{{text}}</p>
 {% endfor %}
