@@ -7,25 +7,25 @@ from pprint import pprint
 app = Flask(__name__)
 
 reddit = praw.Reddit("main bot") #Requires praw.ini file which im not gonna share duh
-def get_meme_v2(src:str='',failed:int=0):
+def get_meme_v2(src:str='',failed:int=0,return_selfpost:bool=False,nsfw:bool=False):
     #Ensures not empty subreddit field
     if src == '' or failed > 6: src = choice(['memes','dankmemes','meirl','wholesomememes'] * 12
                                 + ['historymemes', 'angryupvote', 'artmemes', 'programmerhumor', 'cursedcomments', 'meowirl', 'prequelmemes', 'unexpected'] * 6
                                 + ['shitposting','196','meme','youseecomrade']) #For a total of 100 options
     for submission in reddit.subreddit(src).random_rising(limit=1):
 
-        if submission.over_18:
-            print("\n\n\nNSFW\n\n\n")
+        if submission.over_18 and not nsfw:
+            print("\nNSFW\n")
             return get_meme_v2(src, failed=failed+1)
-            #No error message?
 
-        elif submission.is_self: 
-            print("\n\n\nisself\n\n\n")
+
+        elif submission.is_self and not return_selfpost: 
+            print("\nisself\n")
             return get_meme_v2(src, failed=failed+1)
-            #self explanatory, we cant display selfposts
+
 
         elif hasattr(submission, 'is_gallery'):
-            print("\n\n\nisgallery\n\n\n")
+            print("\nisgallery\n")
             return get_meme_v2(src)
             #idk how to implement gallery
             #Arrow keys???
@@ -56,6 +56,12 @@ def get_meme_v2(src:str='',failed:int=0):
                     embed=sub(r'(width|height)=\"\d+\"',resize,submission.media['oembed']['html']),
                     **common_kwargs)
 
+        elif submission.is_self:
+            return render_template(
+                "embed.html",
+                embed=submission.selftext_html,
+                **common_kwargs
+            )
         else:
             #if is image
             return render_template(
@@ -67,7 +73,14 @@ def get_meme_v2(src:str='',failed:int=0):
 
 @app.route('/',methods=["GET"])
 def index():
-    return get_meme_v2(request.args.get("subreddit", ""))
+    kwargs = {}
+    try: kwargs['src'] = request.args['subreddit']
+    except: pass
+    try: kwargs['return_selfpost'] = False if request.args["return_selfpost"].lower() == "false" else True
+    except: pass
+    try: kwargs['nsfw'] = False if request.args["plsplsplsimdesperateshowmensfw"].lower() == "false" else True
+    except: pass
+    return get_meme_v2(**kwargs)
 
 
 if __name__ == "__main__":
