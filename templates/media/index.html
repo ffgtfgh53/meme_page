@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block head %}
+    <title>{{title}}</title>
+    <style>
+        .flex {
+            padding:10px;
+            margin: 10px;
+            margin-left: 10%;
+            margin-right:10%;
+            justify-content: center;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div class="main" style="min-height: 90%;">
+    <h1>Random post from r/{{subreddit}}</h1>
+    <h2>{{title}}</h2>
+    {% block meme %}
+    <img src="{{meme}}" style="max-width: 90vw; max-height: 70vh;">
+    {% endblock %}
+</div>
+<div class=flex style="display: flex;">
+<a class="flex" style="color: #0000EE;width: 100;" href="{{link}}">Link to post</a>
+<a class="flex" style="color: #0000EE;width: 100; cursor: pointer; " onclick="location.reload()"><u>New post</u></a>
+</div>
+{% for text in extra %}
+<p>{{text}}</p>
+{% endfor %}
+{% endblock %}
