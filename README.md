@@ -10,25 +10,30 @@ Supported post types:
 - Images (including GIFs)
 - Videos
 - YouTube Embeds
+- Selfpost/text-only (can be enabled in settings)
 
 Unsupported post types:
-- Self-post/text only (Could theoretically add support)
 - Gallery/image carousell (Not sure how to implement)
 - Other types? (e.g. polls)
 
 
 Requires internet connection (obviously).
 
-*Does not show NSFW posts*.
+*Does not show NSFW posts unless enabled in settings*.
 
 # How to use
 
 To use the project, you must first have a Reddit client ID and client secret.
 
-[praw.ini](./praw.ini) requires `client_id`, `client_secret` and `user_agent`
+[praw.ini](./praw.ini) requires `client_id`, `client_secret` and `user_agent`.
 
-To read more on `client_id`, `client_secret` and `user_agent`, read [Reddit's API wiki page](https://github.com/reddit-archive/reddit/wiki/API)
+To read more on `client_id`, `client_secret` and `user_agent`, read [Reddit's API wiki page](https://github.com/reddit-archive/reddit/wiki/API).
+
+[config.py](./config.py) requires `SECRET_KEY`.
+
+`SECRET_KEY` can be any string or bytes object that should be unique as it is used to encrypt cookies.
+
 # Dependencies
-Dependencies are listed in [requirements.txt](./requirements.txt)
+Dependencies are listed in [requirements.txt](./requirements.txt).
 
-To install dependencies simply run `pip install -r requirements.txt` or `pip install flask praw`
+To install dependencies simply run `pip install -r requirements.txt` or `pip install flask praw`.

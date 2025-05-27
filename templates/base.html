@@ -11,8 +11,27 @@
             height: 95vh;
             padding: auto;
         }
-
+        .flex {
+            padding:10px;
+            margin: 10px;
+            margin-left: 10%;
+            margin-right:10%;
+            justify-content: center;
+        }
+        h1 {
+            padding: 1%;
+            margin: 1%;
+        }
     </style>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <script>
+                window.alert("{{message}}")
+            </script>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     {% block head %}{% endblock %}
 </head>
 <body>

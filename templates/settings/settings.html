@@ -1,1 +1,74 @@
 {% extends "base.html" %}
+{% block head %}
+<title>Meme page settings</title>
+<style>
+    form {
+        font-size: 30px;
+    }
+    div {
+        margin: 1%;
+        display: block;
+    }
+    div.desc {
+        font-size: 20px;
+        margin-left: 2%;
+
+    }
+    form {
+        display: flex; 
+        justify-content:left; 
+        flex-direction: column; 
+        text-align: left; 
+        margin: 2% 5%; 
+        padding: 2% 5%;
+        bottom: 0;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<h1>
+    Settings
+</h1>
+<form action="/" method="post">
+    <div style="display: block">
+        <label for="subreddit">Subreddit: </label>
+        <textarea name="subreddit" id="subreddit" type="text" style="font-size: inherit; width: 100%; display: block; resize: vertical;">{{session['src']}}</textarea>
+        <div class=desc>
+            <p1>List of subreddits to fetch posts from. 
+                Subreddits should be seperated by spaces. 
+                Leaving blank will reset to default once post is being loaded.
+                Weight of subreddit chosen can be increased by repeating the subreddit.
+                <br>
+                <br>
+                (Text box can be resized downwards)</p1>
+        </div>
+    </div>
+    
+    <div>
+        <input style="font-size: inherit;" name="return_selfpost" id="return_selfpost" type="checkbox" value="true"
+        {% if session['return_selfpost'] == True %}checked{% endif %}>
+        <label for="return_selfpost">Return selfpost? </label>
+        <input type="hidden" name="change_selfpost_state" value="true">
+        <div class=desc>
+            <p1>Whether to show text-only posts</p1>
+        </div>
+    </div>
+    
+    <div>
+        <input style="font-size: inherit;" name="plsplsplsimdesperateshowmensfw" id="plsplsplsimdesperateshowmensfw" type="checkbox" value="true"
+        {% if session['nsfw'] == True %}checked{% endif %}>
+        <label for="plsplsplsimdesperateshowmensfw">Return NSFW (18+) content? </label>
+        <input type="hidden" name="change_nsfw_state" value="true">
+        <div class=desc>
+            <p1>Whether to show content marked as Not Suitable For Work (18+)</p1>
+        </div>
+    </div>
+
+    <div style="padding-top: 5%;">
+        <button style="font-size: inherit;" type="submit" formaction="/settings"       >Save</button>
+        <button style="font-size: inherit;" type="submit" formaction="/"               >Save and exit</button>
+        <button style="font-size: inherit;" type="reset"                               >Reset</button>
+        <button style="font-size: inherit;" type="button" onclick="location.href = '/'">Exit without saving</button>
+    </div>
+</form>
+{% endblock %}
