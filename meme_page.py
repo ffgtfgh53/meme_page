@@ -4,8 +4,8 @@ from random import choice
 from flask import Flask, render_template, request, session, redirect, flash
 import praw
 
-from database import *
-
+from database import get_bookmark, add_bookmark, add_user, check_password, \
+    encode
 
 app = Flask(__name__)
 counter = 0
@@ -50,7 +50,7 @@ reddit = praw.Reddit("main bot")
 embed_dimensions_pattern = compile(r'(width|height)=\"\d+\"')
 whitespace = compile(r' +')
 
-def get_meme_v2(failed:int=0):
+def get_meme(failed:int=0):
 
     global default_subreddits
 
@@ -71,20 +71,20 @@ def get_meme_v2(failed:int=0):
     #At this stage session['src'] will be a list of possible subreddits
     subreddit_display_name = choice(src)
     for submission in reddit.subreddit(subreddit_display_name).random_rising(limit=1):
-
+    
         if submission.over_18 and not session['nsfw']:
             print("\nNSFW\n")
-            return get_meme_v2(failed=failed+1)
+            return get_meme(failed=failed+1)
 
 
         elif submission.is_self and not session['return_selfpost']: 
             print("\nisself\n")
-            return get_meme_v2(failed=failed+1)
+            return get_meme(failed=failed+1)
 
 
         elif hasattr(submission, 'is_gallery'):
             print("\nisgallery\n")
-            return get_meme_v2()
+            return get_meme()
             #idk how to implement gallery
             #Arrow keys???
             #besides gallery typically not memes
@@ -125,7 +125,7 @@ def get_meme_v2(failed:int=0):
             #if is image
             return render_template(
                 'media/index.html', 
-                meme=submission.preview['images'][0]['resolutions'][-1]['url'], 
+                meme=submission.url, 
                 **common_kwargs
                 )
     
@@ -137,7 +137,7 @@ def index():
     if request.form != {}:
         return redirect(request.path)
         #When reloading page from browser will not resend post request
-    return get_meme_v2()
+    return get_meme()
 
 @app.route('/settings',methods=["GET","POST"])
 def settings():
