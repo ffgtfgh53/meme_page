@@ -55,9 +55,12 @@ def get_meme_v2(failed:int=0):
     global default_subreddits
 
     if failed > 6: 
-        flash("""Error: Valid post cannot be found in the specified subreddit(s).
-              Please enter valid subreddit(s) that contain valid posts.""",
-              category='error')
+        error_msg = (
+            r"Error: Valid post cannot be found in the specified subreddit(s).\n"
+            + "Please enter valid subreddit(s) that contain valid posts"
+        )
+        flash(error_msg, category='error')
+        
         src = default_subreddits
 
     else:
@@ -104,7 +107,7 @@ def get_meme_v2(failed:int=0):
                 #Submission is embed :cry:
                 def resize(match):
                     "used for re.sub() to change width and height of embed"
-                    if match.group(1) == "width": return 'width = "70%"'
+                    if match.group(1) == "width": return 'width = "100%"'
                     else: return 'height = "70%"'
                 return render_template(
                     'media/embed.html',

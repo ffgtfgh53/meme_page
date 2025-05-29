@@ -3,7 +3,7 @@
     <title>{{title}}</title>
 {% endblock %}
 {% block body %}
-<div class="main" style="min-height: 90%;">
+<div class="main" style="min-height: 90%; height: 90%;">
     <h1>Random post from r/{{subreddit}}</h1>
     <h2>{{title}}</h2>
     {% block meme %}
@@ -11,9 +11,15 @@
     {% endblock %}
 </div>
 <div class=flex style="display: flex;justify-content: space-evenly;">
-<button style="color: #000000;width: 10%;" onclick="location.href='{{link}}'">Link to post</button>
-<button style="color: #000000;width: 10%;" onclick="location.href='/settings'">Settings</button>
-<button style="color: #000000;width: 10%; cursor: pointer; " onclick="location = location.pathname + location.hash">New post</button>
+    <a href="{{link}}">
+        <button role="link">Link to post</button>
+    </a>
+    <a href="/settings">
+        <button role="link">Settings</button>
+    </a>
+    <a>
+        <button onclick="location = location.pathname + location.hash">New post</button>
+    </a>
 </div>
 {% for text in extra %}
 <p>{{text}}</p>

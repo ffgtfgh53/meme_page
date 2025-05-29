@@ -44,4 +44,6 @@ div.desc {
 
 button {
     font-size: inherit;
+    color: #000000; 
+    cursor: pointer;
 }

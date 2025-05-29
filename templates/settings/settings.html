@@ -9,15 +9,13 @@
 <form action="/" method="post">
     <div style="display: block">
         <label for="subreddit">Subreddit: </label>
-        <textarea name="subreddit" id="subreddit" type="text" style="font-size: inherit; width: 100%; display: block; resize: vertical;">{{session['src']}}</textarea>
+        <textarea name="subreddit" id="subreddit" type="text" rows="6" style="font-size: inherit; width: 100%; display: block; resize: vertical;">{{session['src']}}</textarea>
         <div class=desc>
             <p1>List of subreddits to fetch posts from. 
                 Subreddits should be seperated by spaces. 
                 Leaving blank will reset to default once post is being loaded.
                 Weight of subreddit chosen can be increased by repeating the subreddit.
-                <br>
-                <br>
-                (Text box can be resized downwards)</p1>
+                </p1>
         </div>
     </div>
     
