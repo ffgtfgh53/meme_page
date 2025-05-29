@@ -11,9 +11,9 @@
     {% endblock %}
 </div>
 <div class=flex style="display: flex;justify-content: space-evenly;">
-<a  style="color: #0000EE;width: 100;" href="{{link}}">Link to post</a>
-<a  style="color: #0000EE;width: 100;" href="/settings">Settings</a>
-<a  style="color: #0000EE;width: 100; cursor: pointer; " onclick="location = location.pathname + location.hash"><u>New post</u></a>
+<button style="color: #000000;width: 10%;" onclick="location.href='{{link}}'">Link to post</button>
+<button style="color: #000000;width: 10%;" onclick="location.href='/settings'">Settings</button>
+<button style="color: #000000;width: 10%; cursor: pointer; " onclick="location = location.pathname + location.hash">New post</button>
 </div>
 {% for text in extra %}
 <p>{{text}}</p>

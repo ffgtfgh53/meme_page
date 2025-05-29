@@ -2,27 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" lang="en">
-    <style>
-        body {
-            text-align: center;
-            font-family: 'Ubuntu mono, monospace, sans serif';
-            background-color: black;
-            color: aliceblue;
-            height: 95vh;
-            padding: auto;
-        }
-        .flex {
-            padding:10px;
-            margin: 10px;
-            margin-left: 10%;
-            margin-right:10%;
-            justify-content: center;
-        }
-        h1 {
-            padding: 1%;
-            margin: 1%;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styles.css') }}">
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}

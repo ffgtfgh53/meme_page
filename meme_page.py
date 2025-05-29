@@ -1,8 +1,10 @@
 from re import sub, compile
-from random import choice#, randint
+from random import choice
 
 from flask import Flask, render_template, request, session, redirect, flash
 import praw
+
+from database import *
 
 
 app = Flask(__name__)
@@ -10,9 +12,11 @@ counter = 0
 
 app.config.from_pyfile("config.py")
 
-default_subreddits = (['memes','dankmemes','meirl','wholesomememes'] * 12
-                    + ['historymemes', 'angryupvote', 'artmemes', 'programmerhumor', 'cursedcomments', 'meowirl', 'prequelmemes', 'unexpected'] * 6
-                    + ['shitposting','196','meme','youseecomrade']) #For a total of 100 options
+default_subreddits = (
+    ['memes','dankmemes','meirl'] * 2
+  + ['historymemes', 'angryupvote', 'wholesomememes', 'programmerhumor', 
+     'cursedcomments', 'meowirl', 'prequelmemes', 'unexpected', 'artmemes']
+  ) #For a total of 15 options
 
 def init_session_vars():
     session['src'] = ' '.join(default_subreddits)
@@ -22,22 +26,25 @@ def init_session_vars():
 
 
 def set_args(request):
-    if request.method == 'GET': args = request.args
-    else: args = request.form
+    if request.method == 'GET': 
+        args = request.args
+    else: 
+        args = request.form
     if 'init_session_vars' not in session: init_session_vars()
 
     if 'subreddit' in args: session['src'] = args['subreddit']
 
     if 'change_selfpost_state' in args: session['return_selfpost'] = False
     if 'return_selfpost' in args: 
-        session['return_selfpost'] = True  if args["return_selfpost"].lower() == "true"  else False
+        session['return_selfpost'] = (args["return_selfpost"].lower() == "true")
+        #true, True, TRUE, trUE and tRuE all return True
 
     if 'change_nsfw_state' in args: session['nsfw'] = False
     if 'plsplsplsimdesperateshowmensfw' in args:
-        session['nsfw'] = True if args["plsplsplsimdesperateshowmensfw"].lower() == "true" else False
+        session['nsfw'] = args["plsplsplsimdesperateshowmensfw"].lower() == "true" 
     
-
-reddit = praw.Reddit("main bot") #Requires praw.ini file which im not gonna share duh
+#Requires praw.ini file which im not gonna share duh
+reddit = praw.Reddit("main bot") 
 
 #Regex pattern compilation
 embed_dimensions_pattern = compile(r'(width|height)=\"\d+\"')
@@ -48,7 +55,9 @@ def get_meme_v2(failed:int=0):
     global default_subreddits
 
     if failed > 6: 
-        flash("Error: Valid post cannot be found in the specified subreddit(s).\\nPlease enter valid subreddit(s) that contain valid posts.")
+        flash("""Error: Valid post cannot be found in the specified subreddit(s).
+              Please enter valid subreddit(s) that contain valid posts.""",
+              category='error')
         src = default_subreddits
 
     else:
@@ -92,14 +101,15 @@ def get_meme_v2(failed:int=0):
 
         elif submission.media != None:
             if submission.media.get('oembed', False):
-                #Is embed :cry:
+                #Submission is embed :cry:
                 def resize(match):
                     "used for re.sub() to change width and height of embed"
                     if match.group(1) == "width": return 'width = "70%"'
                     else: return 'height = "70%"'
                 return render_template(
                     'media/embed.html',
-                    embed=sub(embed_dimensions_pattern,resize,submission.media['oembed']['html']),
+                    embed=sub(embed_dimensions_pattern, resize,
+                              submission.media['oembed']['html']),
                     **common_kwargs)
 
         elif submission.is_self:
@@ -120,7 +130,6 @@ def get_meme_v2(failed:int=0):
 
 @app.route('/',methods=["GET", "POST"])
 def index():
-    global counter
     set_args(request)
     if request.form != {}:
         return redirect(request.path)
