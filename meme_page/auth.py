@@ -62,13 +62,6 @@ def signup():
     return redirect(url_for('auth.login'))
 
 @auth.route('/logout')
-def logout_confirm():
-    #@login_required
-    if not current_user.is_authenticated:
-        return redirect(url_for('auth.login'))
-    return render_template('auth/logout.html')
-
-@auth.route('/logout', methods=["POST"])
 def logout():
     if not current_user.is_authenticated:
         return redirect(url_for('auth.login'))

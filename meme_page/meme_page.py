@@ -5,12 +5,6 @@ from flask import Blueprint, render_template, request, session, redirect, flash
 from flask_login import LoginManager, current_user
 import praw
 
-from . import db
-
-
-# from database import get_bookmark, add_bookmark, add_user, check_password, \
-#     encode
-
 app = Blueprint('app', __name__)
 
 default_subreddits = (
@@ -24,7 +18,6 @@ def init_session_vars():
     session['return_selfpost'] = False
     session['nsfw'] = False
     session['init_session_vars'] = True
-
 
 def set_args(request):
     if request.method == 'GET': 
@@ -61,7 +54,6 @@ def get_meme(failed:int=0):
             + "Please enter valid subreddit(s) that contain valid posts"
         )
         flash(error_msg, category='error')
-        
         src = default_subreddits
 
     else:
@@ -129,7 +121,6 @@ def get_meme(failed:int=0):
                 meme=submission.url, 
                 **common_kwargs
                 )
-    
 
 
 @app.route('/',methods=["GET", "POST"])

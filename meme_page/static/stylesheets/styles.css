@@ -1,82 +1,82 @@
 body {
-    text-align: center;
-    font-family: 'Ubuntu mono, monospace, sans serif';
-    background-color: black;
-    color: aliceblue;
-    height: 95vh;
-    margin: 0;
+  text-align: center;
+  font-family: 'Ubuntu mono, monospace, sans serif';
+  background-color: black;
+  color: aliceblue;
+  height: 95vh;
+  margin: 0;
 }
 
 .flex {
-    padding:10px;
-    margin: 10px;
-    margin-left: 10%;
-    margin-right:10%;
-    justify-content: center;
+  padding:10px;
+  margin: 10px;
+  margin-left: 10%;
+  margin-right:10%;
+  justify-content: center;
 }
 
 h1 {
-    padding: 16px;
-    margin: 16px;
+  padding: 16px;
+  margin: 16px;
 }
 
 form {
-    font-size: 30px;
-    display: flex; 
-    justify-content:left; 
-    flex-direction: column; 
-    text-align: left; 
+  font-size: 30px;
+  display: flex; 
+  justify-content:left; 
+  flex-direction: column; 
+  text-align: left; 
 }
 
 form.settings {
-    margin: 20px 50px;
-    padding: 20px 50px;
+  margin: 20px 50px;
+  padding: 20px 50px;
 }
 
 form.auth {
-    margin: 2% 5%;
-    padding: 2% 5%;
+  margin: 2% 5%;
+  padding: 2% 5%;
 }
 
 div {
-    margin: 1%;
-    display: block;
+  margin: 1%;
+  display: block;
 }
 
 div.desc {
-    font-size: 20px;
-    margin-left: 2%;
+  font-size: 20px;
+  margin-left: 2%;
 
 }
 
 button {
-    font-size: inherit;
-    color: #000000; 
-    cursor: pointer;
+  font-size: inherit;
+  color: #000000; 
+  cursor: pointer;
 }
 
 button.auth {
-    margin: 10px; 
-    border-width: 2px;
-    padding: 2px;
-    width: 260px;
+  margin: 10px; 
+  border-width: 2px;
+  padding: 2px;
+  width: 260px;
 }
 
 div.auth {
-    width: 350px;
-    justify-self: center;
-    margin: auto;
+  width: 350px;
+  justify-self: center;
+  margin: auto;
 }
 
 h1.auth {
-    font-size: 60px;
-    margin: 10% auto;
+  font-size: 60px;
+  margin: 10% auto;
 }
 
 input.auth {
-    margin: 10px; 
-    font-size: large; 
-    width: 252px;
+  margin: 10px; 
+  font-size: large; 
+  width: 252px;
 }
 
 .navbar {
@@ -122,6 +122,7 @@ input.auth {
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  cursor: pointer;
 }
 
 .dropdown-content a {
