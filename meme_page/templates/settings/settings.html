@@ -6,7 +6,7 @@
 <h1>
     Settings
 </h1>
-<form action="/" method="post">
+<form action="/" method="post" class="settings">
     <div style="display: block">
         <label for="subreddit">Subreddit: </label>
         <textarea name="subreddit" id="subreddit" type="text" rows="6" style="font-size: inherit; width: 100%; display: block; resize: vertical;">{{session['src']}}</textarea>
@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    <div style="padding-top: 5%;">
+    <div style="padding-top: 40px;">
         <button style="font-size: inherit;" type="submit" formaction="/settings"       >Save</button>
         <button style="font-size: inherit;" type="submit" formaction="/"               >Save and exit</button>
         <button style="font-size: inherit;" type="reset"                               >Reset</button>

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block head %}<title>Login for Meme-page</title>{% endblock %}
+{% block body %}
+<div class="auth">
+    <h1 class="auth">Login</h1>
+    <form action="/login" method="post" class="auth">
+            <div style="margin: 20% 0;">
+                <input class="auth" type="text" id="user" name="user" placeholder="Username" autofocus="">
+                <input class="auth" type="password" id="pass" name="pass" placeholder="Password">
+                <label class="checkbox" style="font-size: large; margin: 10px;border-radius: 2px;">
+                    <input type="checkbox" name="remember">
+                    Remember me
+                </label>
+            </div>
+        <button type="submit" class="auth">Login</button>
+    </form>
+    <br>
+    <a href="/signup">Signup instead</a>
+</div>
+{% endblock %}

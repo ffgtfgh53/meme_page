@@ -1,16 +1,17 @@
 from re import sub, compile
 from random import choice
 
-from flask import Flask, render_template, request, session, redirect, flash
+from flask import Blueprint, render_template, request, session, redirect, flash
+from flask_login import LoginManager, current_user
 import praw
 
-from database import get_bookmark, add_bookmark, add_user, check_password, \
-    encode
+from . import db
 
-app = Flask(__name__)
-counter = 0
 
-app.config.from_pyfile("config.py")
+# from database import get_bookmark, add_bookmark, add_user, check_password, \
+#     encode
+
+app = Blueprint('app', __name__)
 
 default_subreddits = (
     ['memes','dankmemes','meirl'] * 2

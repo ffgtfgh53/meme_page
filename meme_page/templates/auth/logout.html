@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block head %}<title>Logout</title>{% endblock %}
+{% block body %}
+<div class="auth">
+    <h1 class="auth">Logout?</h1>
+    <form action="/logout" method="post" class="auth">
+        <input type="hidden" id="logout" name="logout" checked="">
+        <button type="submit" class="auth">Logout</button>
+        <button type="button" class="auth" onclick="history.back()">Cancel</button>
+    </form>
+    <br>
+</div>
+{% endblock %}

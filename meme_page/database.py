@@ -1,13 +1,12 @@
 import sqlite3 as sql
-import hashlib
 
+from werkzeug.security import generate_password_hash, check_password_hash
 import praw
 from flask import flash
 
 
 
-def encode(password:str):
-    return hashlib.sha256(password.encode()).hexdigest()
+
 
 def add_user(username: str, password:str):
     """Adds username and password to databease.
@@ -16,7 +15,7 @@ def add_user(username: str, password:str):
              VALUES(?,?)"""
     with sql.connect('database.db') as cx:
         cur = cx.cursor()
-        cur.execute(sql_query, (username, encode(password)))
+        cur.execute(sql_query, (username, generate_password_hash(password)))
         cx.commit()
         return cur.lastrowid
 
@@ -57,7 +56,7 @@ def get_bookmark(username: str) -> list:
                        AND POSTS.ID=BOOKMARKS.POSTID""", 
                        (userID,)).fetchall()
 
-def check_password(username: str, password: str, encoded: bool = False):
+def check_password(username: str, password: str):
     with sql.connect('database.db') as cx:
         cur = cx.cursor()
         print(username)
@@ -68,7 +67,7 @@ def check_password(username: str, password: str, encoded: bool = False):
         except TypeError: #Nonetype object is not subscriptable
             flash("Username not found.", category='error')
             return False
-    if not encoded: password = encode(password)
+    if not encoded: password = generate_password_hash(password)
     if password == true_pass:
         return True
     flash("Incorrect password",category='error')
