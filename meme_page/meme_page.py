@@ -3,7 +3,8 @@ from random import choice
 
 from flask import Blueprint, render_template, request, session, redirect, flash
 from flask_login import LoginManager, current_user
-import praw
+
+from .extensions import reddit
 
 app = Blueprint('app', __name__)
 
@@ -37,8 +38,6 @@ def set_args(request):
     if 'plsplsplsimdesperateshowmensfw' in args:
         session['nsfw'] = args["plsplsplsimdesperateshowmensfw"].lower() == "true" 
     
-#Requires praw.ini file which im not gonna share duh
-reddit = praw.Reddit("main bot") 
 
 #Regex pattern compilation
 embed_dimensions_pattern = compile(r'(width|height)=\"\d+\"')

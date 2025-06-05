@@ -21,8 +21,29 @@
         <button onclick="location = location.pathname + location.hash">New post</button>
     </a>
 </div>
-{% for text in extra %}
-<p>{{text}}</p>
-{% endfor %}
+
+<script>
+  async function createBookmark() {
+    let data = new FormData()
+    data.append('link', '{{link}}')
+    const url = {{ url_for('account.bookmarks')|tojson }};
+    try {
+      const response = await fetch(url, {
+                          "method": "POST",
+                          "body": data
+      });
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+</script>
+
+
 {% endblock %}
-<!---->

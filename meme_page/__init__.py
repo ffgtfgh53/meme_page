@@ -29,3 +29,5 @@ def create_app():
 
     return app
     
+with create_app().app_context():
+    db.create_all()

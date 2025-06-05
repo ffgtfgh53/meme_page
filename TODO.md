@@ -2,7 +2,7 @@
 ## Important
 
  - [ ] Bookmarks
-	 - [ ] Create bookmark
+	 - [x] Create bookmark
 	 - [ ] View bookmarks
 	 - [ ] Delete bookmarks
  - [ ] Account
