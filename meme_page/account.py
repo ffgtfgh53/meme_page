@@ -13,7 +13,7 @@ account = Blueprint('account', __name__)
 @account.route('/profile')
 @login_required
 def profile():
-    return render_template('account/profile.html')
+    return render_template('account/profile.html.jinja')
 
 @account.route('/bookmarks')
 @login_required

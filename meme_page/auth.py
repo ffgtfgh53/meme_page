@@ -10,7 +10,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login')
 def login_page():
-    return render_template('auth/login.html')
+    return render_template('auth/login.html.jinja')
 
 @auth.route('/login',methods=["POST"])
 def login():
@@ -34,7 +34,7 @@ def login():
 
 @auth.route('/signup')
 def signup_page():
-    return render_template('/auth/signup.html')
+    return render_template('/auth/signup.html.jinja')
 
 @auth.route('/signup', methods=["POST"])
 def signup():
@@ -42,7 +42,7 @@ def signup():
     username = request.form.get('user',False,str)
     password = request.form.get('pass', False, str)
     if not (username or password): #username/password is null or GET request
-        return render_template('auth/login.html')
+        return render_template('auth/login.html.jinja')
 
     user = Users.query.filter_by(username=username).first() 
     # if this returns a user, then the user already exists in database

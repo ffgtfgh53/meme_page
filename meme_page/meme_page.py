@@ -90,7 +90,7 @@ def get_meme(failed:int=0):
         if submission.is_video:
             #idk why im using fallback url but ok
             return render_template(
-                'media/video.html', 
+                'media/video.html.jinja', 
                 meme=submission.media['reddit_video']['fallback_url'], 
                 **common_kwargs)
 
@@ -102,21 +102,21 @@ def get_meme(failed:int=0):
                     if match.group(1) == "width": return 'width = "100%"'
                     else: return 'height = "70%"'
                 return render_template(
-                    'media/embed.html',
+                    'media/embed.html.jinja',
                     embed=sub(embed_dimensions_pattern, resize,
                               submission.media['oembed']['html']),
                     **common_kwargs)
 
         elif submission.is_self:
             return render_template(
-                "media/embed.html",
+                "media/embed.html.jinja",
                 embed=submission.selftext_html,
                 **common_kwargs
             )
         else:
             #if is image
             return render_template(
-                'media/index.html', 
+                'media/index.html.jinja', 
                 meme=submission.url, 
                 **common_kwargs
                 )
@@ -133,7 +133,7 @@ def index():
 @app.route('/settings',methods=["GET","POST"])
 def settings():
     set_args(request)
-    return render_template('settings/settings.html')
+    return render_template('settings/settings.html.jinja')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=8080, debug=True)
