@@ -67,60 +67,48 @@ def get_meme(failed:int=0):
         if submission.over_18 and not session['nsfw']:
             print("\nNSFW\n")
             return get_meme(failed=failed+1)
-
-
         elif submission.is_self and not session['return_selfpost']: 
             print("\nisself\n")
             return get_meme(failed=failed+1)
-
-
         elif hasattr(submission, 'is_gallery'):
             print("\nisgallery\n")
             return get_meme()
             #idk how to implement gallery
             #Arrow keys???
             #besides gallery typically not memes
-
         common_kwargs = { #For unpacking in render_template
                 'subreddit':subreddit_display_name, 
                 'title':submission.title, 
                 'link':'https://reddit.com' + submission.permalink}
                 
-
         if submission.is_video:
             #idk why im using fallback url but ok
             return render_template(
                 'media/video.html.jinja', 
                 meme=submission.media['reddit_video']['fallback_url'], 
                 **common_kwargs)
-
-        elif submission.media != None:
-            if submission.media.get('oembed', False):
-                #Submission is embed :cry:
-                def resize(match):
-                    "used for re.sub() to change width and height of embed"
-                    if match.group(1) == "width": return 'width = "100%"'
-                    else: return 'height = "70%"'
-                return render_template(
-                    'media/embed.html.jinja',
-                    embed=sub(embed_dimensions_pattern, resize,
-                              submission.media['oembed']['html']),
-                    **common_kwargs)
-
+        elif submission.media.get('oembed', False):
+            #Submission is embed :cry:
+            def resize(match):
+                return ('width = "100%"' if (match.group(1) == "width")
+                        else 'height = "70%"')
+            return render_template(
+                'media/embed.html.jinja',
+                embed=sub(embed_dimensions_pattern, 
+                            resize,
+                            submission.media['oembed']['html']),
+                **common_kwargs)
         elif submission.is_self:
             return render_template(
                 "media/embed.html.jinja",
                 embed=submission.selftext_html,
-                **common_kwargs
-            )
+                **common_kwargs)
         else:
             #if is image
             return render_template(
                 'media/index.html.jinja', 
                 meme=submission.url, 
-                **common_kwargs
-                )
-
+                **common_kwargs)
 
 @app.route('/',methods=["GET", "POST"])
 def index():
@@ -135,5 +123,5 @@ def settings():
     set_args(request)
     return render_template('settings/settings.html.jinja')
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=8080, debug=True)
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0',port=8080, debug=True)
