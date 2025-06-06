@@ -13,6 +13,12 @@
 	 - [ ] Update profile page
  - [ ] Better CSS
  ## Other ideas:
+ - Sort bookmarks
+	 - By date added (ascend/descend)
+	 - By upvotes on post?
+	 - Filter by subreddit
+	 - Filter by NSFW
+	 - Filter by type?
  - Public profiles?
 	 - Profile picture?
 	 - Bio???
