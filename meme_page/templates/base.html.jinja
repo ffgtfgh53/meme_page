@@ -17,23 +17,26 @@
   {% block head %}{% endblock %}
 </head>
 <body>
-  <nav class="navbar">
-      <a href="/">Home</a>
-      <a href="/settings">Settings</a>
-      {% if not current_user.is_authenticated %}
-      <a style="float: right;"href="/signup">Signup</a>
-      <a style="float: right;"href="/login">Login</a>
-      {% else %}
-      <div class="dropdown" style="margin: 0;">
-        <button class="dropbtn">{{current_user.username}}
-        <i style="content:'\f0d7';"></i>
-        </button>
-        <div class="dropdown-content" style="margin: 0;">
-          <a href="/profile">Profile</a>
-          <a href="javascript:confirmLogout()">Logout</a>
-        </div>
-      </div>
-      {% endif %}
+  <nav>
+    <ul class="flexbox">
+      <li><a href="/">Home</a></li>
+      <li><a href="/settings">Settings</a></li>
+
+      <li style="margin: 0 0 0 auto;">
+        {% if not current_user.is_authenticated %}
+          <a class="dropbtn" href="#">Account &#x25BC;</a>
+          <ul>
+              <li><a href="/signup">Signup</a></li>
+              <li><a href="/login">Login</a></li>
+          </ul>
+        {% else %}
+          <a class="dropbtn" href="#">{{current_user.username}} &#x25BC;</a>
+          <ul>
+              <li><a href="/profile">Profile</a></li>
+              <li><a href="javascript:confirmLogout()">Logout</a></li>
+          </ul>
+        {% endif %}
+      </li>
     </nav>
 
   {% with messages = get_flashed_messages(with_categories=True) %}

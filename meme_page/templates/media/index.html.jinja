@@ -3,14 +3,16 @@
     <title>{{title}}</title>
 {% endblock %}
 {% block body %}
-<div class="main" style="min-height: 85%;">
+<div class="main">
+  <div class="title">
     <h1>Random post from r/{{subreddit}}</h1>
     <h2>{{title}}</h2>
-    {% block meme %}
-    <img src="{{meme}}" style="max-width: 90vw; max-height: 70vh;">
-    {% endblock %}
+  </div>
+  {% block meme %}
+  <img src="{{meme}}" style="max-width: 90vw; max-height: 70vh;">
+  {% endblock %}
 </div>
-<div class=flex style="display: flex;justify-content: space-evenly;">
+<div class="flexbox button-container" style="justify-content: space-evenly;">
     <a href="{{link}}">
         <button role="link">Link to post</button>
     </a>

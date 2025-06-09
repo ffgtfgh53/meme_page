@@ -80,24 +80,24 @@ def get_meme(failed:int=0):
                 'subreddit':subreddit_display_name, 
                 'title':submission.title, 
                 'link':'https://reddit.com' + submission.permalink}
-                
-        if submission.is_video:
-            #idk why im using fallback url but ok
-            return render_template(
-                'media/video.html.jinja', 
-                meme=submission.media['reddit_video']['fallback_url'], 
-                **common_kwargs)
-        elif submission.media.get('oembed', False):
-            #Submission is embed :cry:
-            def resize(match):
-                return ('width = "100%"' if (match.group(1) == "width")
-                        else 'height = "70%"')
-            return render_template(
-                'media/embed.html.jinja',
-                embed=sub(embed_dimensions_pattern, 
-                            resize,
-                            submission.media['oembed']['html']),
-                **common_kwargs)
+        if submission.media:
+            if submission.is_video:
+                #idk why im using fallback url but ok
+                return render_template(
+                    'media/video.html.jinja', 
+                    meme=submission.media['reddit_video']['fallback_url'], 
+                    **common_kwargs)
+            elif submission.media.get('oembed', False):
+                #Submission is embed :cry:
+                def resize(match):
+                    return ('width = "100%"' if (match.group(1) == "width")
+                            else 'height = "70%"')
+                return render_template(
+                    'media/embed.html.jinja',
+                    embed=sub(embed_dimensions_pattern, 
+                                resize,
+                                submission.media['oembed']['html']),
+                    **common_kwargs)
         elif submission.is_self:
             return render_template(
                 "media/embed.html.jinja",

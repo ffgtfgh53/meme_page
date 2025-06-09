@@ -1,9 +1,6 @@
-from typing import Optional
-
 from flask_login import UserMixin
 
 from .extensions import db
-
 
 class Users(db.Model, UserMixin):
     __tablename__ = "USERS"
@@ -13,18 +10,20 @@ class Users(db.Model, UserMixin):
     nsfw = db.Column("SHOW_NSFW", db.Boolean)
     bookmarks = db.relationship("Posts", secondary="BOOKMARKS", 
                                 back_populates='users')
-    
     def __repr__(self):
-        return f"<User {self.id=} {self.username=}>"
+        return f"<Users {self.id=} {self.username=}>"
 
 class Posts(db.Model):
     __tablename__ = 'POSTS'
     id = db.Column("ID", db.Integer, primary_key=True)
+    #Password hash is exactly 162 chars in length
     link = db.Column("LINK", db.String(162), unique=True, nullable=False)
     subreddit = db.Column("SUBREDDIT", db.String(50))
     nsfw = db.Column("NSFW", db.Boolean)
     users = db.relationship("Users", secondary="BOOKMARKS", 
                             back_populates='bookmarks')
+    def __repr__(self):
+        return f"<Posts {self.id=} {self.link=}>"
 
 class Bookmarks(db.Model):
     __tablename__ = "BOOKMARKS"

@@ -1,10 +1,16 @@
 body {
   text-align: center;
-  font-family: 'Ubuntu mono, monospace, sans serif';
+  font-family:'Courier New', Courier, monospace;
   background-color: black;
   color: aliceblue;
   height: 95vh;
-  margin: 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.flexbox {
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .flex {
@@ -79,65 +85,91 @@ input.auth {
   width: 252px;
 }
 
-.navbar {
-  overflow: hidden;
+:root {
+    --link-color: #ecf0f1;
+    --link-active-color: #f1c40f;
+}
+
+nav ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    text-align: left;
+}
+
+nav a {
+    display: block;
+    padding: 0 16px;
+    transition: color 0.2s;
+    color: var(--link-color);
+    font-size: 18px;
+    line-height: 2;
+    text-decoration: none;
+}
+
+nav ul ul li a {
+    color: var(--link-color);
+}
+nav ul ul li a:focus,
+nav ul ul li a:active {
+    color: var(--link-active-color);
+}
+nav a:hover,
+nav a:focus,
+nav a:active,
+nav a:focus:hover,
+nav a:active:hover {
+    color: var(--link-active-color);
+}
+
+nav ul ul {
+    display: none;
+    position: absolute;
+    background: #2d3436;
+    padding: 8px 0 8px 0;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+nav ul ul li {
+    display: list-item;
+    position: relative;
+}
+
+nav ul li:focus > ul,
+nav ul li:active > ul {
+    display: inherit;
+}
+
+nav a:focus + ul,
+nav a:active + ul {
+    display: inherit;
+}
+
+.card {
+  border: #888 8px solid;
+  border-radius: 20px;
   background-color: #333;
+  padding: 5px;
+  margin: 20px 5%;
 }
 
-.navbar a {
-  float: left;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  padding: 10px 16px;
-  text-decoration: none;
+.float-left {
+  margin: 0 0 0 auto;
 }
 
-.dropdown {
-  float: right;
-  overflow: hidden;
+.button-container button {
+  background-color: #333;
+  color: aliceblue;
+  border: 2px ridge #ddd;
+  border-radius: 5px;
 }
 
-
-.dropdown .dropbtn {
-  font-size: 16px;  
-  border: none;
-  outline: none;
-  color: white;
-  padding: 10px 16px;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
+.title h1, .title h2 {
+  margin-block: clamp(5px, 20px, 2%);
 }
 
-.navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  cursor: pointer;
-}
-
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
+.title h1 {
+  padding: clamp(5px, 16px, 1.6%);
 }
