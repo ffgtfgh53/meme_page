@@ -4,6 +4,10 @@
 {% endblock %}
 {% block body %}
 <div class="main">
+  <div id="bookmark-popup" style="display: none;">
+    <p>Bookmark created successfully!</p>
+    <button id="bookmark-popup-close"><i class="fa-solid fa-xmark"></i></button>
+  </div>
   <div class="title">
     <a href="{{link}}" target="_blank">
       Random post from r/{{subreddit}} 
@@ -16,17 +20,13 @@
   {% endblock %}
 </div>
 <div class="flexbox button-container" style="justify-content: space-evenly;">
-    <a href="{{link}}">
-        <button role="link">Link to post</button>
-    </a>
-    <a href="/settings">
-        <button role="link">Settings</button>
+    <a>
+        <button onclick="createBookmark()">Bookmark <i class="fa-solid fa-bookmark"></i></button>
     </a>
     <a>
         <button onclick="location = location.pathname + location.hash">New post</button>
     </a>
 </div>
-
 <script>
   async function createBookmark() {
     let data = new FormData()
@@ -43,12 +43,20 @@
 
       const json = await response.json();
       console.log(json);
+      if (!json.error) {
+        const popup = document.getElementById('bookmark-popup');
+        const popupClose = document.getElementById('bookmark-popup-close');
+        popup.style.display = 'block';
+        popup.style.zIndex = 10;
+        function closePopup() {
+          popup.style.display = 'none';
+          popup.style.zIndex = 0;
+        }
+        popupClose.addEventListener("click", closePopup);
+      }
     } catch (error) {
       console.error(error.message);
     }
   }
-
 </script>
-
-
 {% endblock %}

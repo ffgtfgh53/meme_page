@@ -138,6 +138,7 @@ nav ul ul {
     background: #2d3436;
     padding: 0;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    z-index: 1;
 }
 nav ul ul li {
     display: list-item;
@@ -212,4 +213,26 @@ nav a:active + ul {
 .card img {
   margin: 16px;
   margin-left: auto;
+}
+
+#bookmark-popup {
+  background-color: chartreuse;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #000000;
+  border-radius: 8px;
+  border: #333 2px solid;
+  position: absolute;
+  inset: 0;
+  bottom: auto;
+  z-index: 0;
+  padding: 12px;
+}
+
+#bookmark-popup p {
+  display: inline-block;
+}
+
+div.main {
+  position: relative;
 }

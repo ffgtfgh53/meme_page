@@ -3,7 +3,7 @@ E.g. /account and /bookmarks"""
 
 from typing import Iterable
 
-from flask import Blueprint, render_template, request, jsonify, url_for, abort
+from flask import Blueprint, render_template, request, jsonify, url_for, abort, flash
 from flask_login import current_user, login_required
 import praw
 
@@ -39,7 +39,6 @@ def bookmark_page():
             'link': bookmark.link}
     bookmarks = [bookmark_from_url(bookmark) for bookmark in current_user.bookmarks]
     return render_template('account/bookmarks.html.jinja', bookmarks=bookmarks)
-    #TODO
 
 @account.route('/bookmarks', methods=["POST"])
 @login_required
@@ -69,7 +68,6 @@ def create_bookmark():
         db.session.commit()
     except:
         return jsonify({'error': 'Bookmark already exists'})
-    print('ok')
     return jsonify({'error': False, })
     
 @account.route('/banana')
