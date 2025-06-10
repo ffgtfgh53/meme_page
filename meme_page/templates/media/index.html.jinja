@@ -5,7 +5,10 @@
 {% block body %}
 <div class="main">
   <div class="title">
-    <h1>Random post from r/{{subreddit}}</h1>
+    <a href="{{link}}" target="_blank">
+      Random post from r/{{subreddit}} 
+      <i class="fa-solid fa-up-right-from-square"></i>
+    </a>
     <h2>{{title}}</h2>
   </div>
   {% block meme %}
@@ -28,7 +31,7 @@
   async function createBookmark() {
     let data = new FormData()
     data.append('link', '{{link}}')
-    const url = {{ url_for('account.bookmarks')|tojson }};
+    const url = {{ url_for('account.create_bookmark')|tojson }};
     try {
       const response = await fetch(url, {
                           "method": "POST",

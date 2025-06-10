@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styles.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='images/meme_man.png')}}">
+  <script src="https://kit.fontawesome.com/2f71a5c98f.js" crossorigin="anonymous"></script>
   {% if current_user.is_authenticated %}
   <script src="{{ url_for('static', filename='scripts/account.js') }}"></script>
   {% endif %}

@@ -3,15 +3,15 @@
 
  - [ ] Bookmarks
 	 - [x] Create bookmark
-	 - [ ] View bookmarks
+	 - [x] View bookmarks
 	 - [ ] Delete bookmarks
  - [ ] Account
 	 - [ ] Settings stored in account
-	 - [ ]  Change account password
+	 - [ ] Change account password
 	 - [ ] NSFW verification for account
 		 - [ ] Restrict NSFW to verified accounts
 	 - [ ] Update profile page
- - [ ] Better CSS
+ - [x] Better CSS
  ## Other ideas:
  - Sort bookmarks
 	 - By date added (ascend/descend)

@@ -173,10 +173,43 @@ nav a:active + ul {
   border-radius: 5px;
 }
 
-.title h1, .title h2 {
-  margin-block: clamp(5px, 20px, 2%);
+.title * {
+  margin-block: clamp(5px, 16px, 1.6vh);
 }
 
-.title h1 {
-  padding: clamp(5px, 16px, 1.6%);
+.title :first-child {
+  padding: clamp(5px, 16px, 1.6vh);
+  color: aliceblue;
+  text-decoration: underline;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.card {
+  text-align: left;
+}
+
+.card div {
+    margin: auto 0px;
+    max-width: calc(88.2vw - 220px);
+    padding-left: 32px;
+}
+
+.card a {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  font-size: 32px;
+  color: aliceblue;
+}
+
+.card p {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+
+.card img {
+  margin: 16px;
+  margin-left: auto;
 }

@@ -3,9 +3,15 @@
 {% block body %}
 <div>
   {% for bookmark in bookmarks %}
-  <div class="card">
-    <h1>{{bookmark.title}}</h1>
-    <p1>From {{bookmark.subreddit}}</p1>
+  <div class="flexbox card">
+    <div>
+      <a href="{{bookmark.link}}" target="_blank">
+        {{bookmark.title}} 
+        <i class="fa-solid fa-up-right-from-square"></i>
+      </a>
+      <p>From r/{{bookmark.subreddit}}</p>
+    </div>
+    <img class="thumbnail" src="{{bookmark.thumbnail}}">
   </div>
   {% endfor %}
 </div>
