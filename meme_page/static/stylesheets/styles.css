@@ -70,8 +70,7 @@ button.auth {
 
 div.auth {
   width: 350px;
-  justify-self: center;
-  margin: auto;
+  margin: 0 auto;
 }
 
 h1.auth {
@@ -86,28 +85,35 @@ input.auth {
 }
 
 :root {
-    --link-color: #ecf0f1;
-    --link-active-color: #f1c40f;
+    --link-color: aliceblue;
+    --link-active-color: rgb(255, 63, 63);
+}
+
+nav {
+  background-color: #333
 }
 
 nav ul {
     list-style: none;
     padding-left: 0;
+    margin: 0;
 }
 
 nav ul li {
     display: inline-block;
-    text-align: left;
+    text-align: center;
 }
 
 nav a {
     display: block;
-    padding: 0 16px;
+    padding: 6px 16px;
     transition: color 0.2s;
     color: var(--link-color);
     font-size: 18px;
     line-height: 2;
     text-decoration: none;
+    min-width: 110px;
+    box-sizing: border-box;
 }
 
 nav ul ul li a {
@@ -115,21 +121,22 @@ nav ul ul li a {
 }
 nav ul ul li a:focus,
 nav ul ul li a:active {
-    color: var(--link-active-color);
+    background-color: var(--link-active-color);
 }
 nav a:hover,
 nav a:focus,
 nav a:active,
 nav a:focus:hover,
 nav a:active:hover {
-    color: var(--link-active-color);
+    background-color: var(--link-active-color);
 }
 
 nav ul ul {
     display: none;
     position: absolute;
+    right: 0px;
     background: #2d3436;
-    padding: 8px 0 8px 0;
+    padding: 0;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 nav ul ul li {

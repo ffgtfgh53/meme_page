@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styles.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='images/meme_man.png')}}">
+  {% if current_user.is_authenticated %}
+  <script src="{{ url_for('static', filename='scripts/account.js') }}"></script>
+  {% endif %}
   {% with errors = get_flashed_messages(category_filter="error") %}
     {% if errors %}
       {% for error in errors %}
@@ -22,7 +25,7 @@
       <li><a href="/">Home</a></li>
       <li><a href="/settings">Settings</a></li>
 
-      <li style="margin: 0 0 0 auto;">
+      <li style="margin-left:auto">
         {% if not current_user.is_authenticated %}
           <a class="dropbtn" href="#">Account &#x25BC;</a>
           <ul>
@@ -41,15 +44,15 @@
 
   {% with messages = get_flashed_messages(with_categories=True) %}
     {% if messages %}
-      {% for message in messages %}
+      {% for message in messages if not message[0] == 'error'%}
       <dialog style="position: absolute; min-width: 50%;" open>
         <form method="dialog" style="
           flex-direction: row; 
           justify-content: space-between;
           {% if message[0] == 'success' %}
           background-color: green;
-          {% endif %}"> <!--Please ignore the errors, Jinja will fix it-->
-          <p1 style="padding: 0 10px;">{{message[1]}}</p1>
+          {% endif %}">
+          <p1 style="margin: auto 0;">{{message[1]}}</p1>
           <button style="padding: 0 10px; ">x</button>
         </form>
       </dialog>
@@ -60,19 +63,6 @@
 
 
   {% block body %}{% endblock %}
-  
-  {% if current_user.is_authenticated %}
-  <script>
-  function confirmLogout() {
-    var txt;
-    if (confirm("Are you sure you want to logout?")) {
-      window.location.pathname = '/logout'
-    } else {
-      txt = "You pressed Cancel!";
-    }
-  }
-  </script>
-  {% endif %}
 
 </body>
 </html>

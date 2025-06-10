@@ -1,0 +1,12 @@
+{% extends "base.html.jinja" %}
+
+{% block body %}
+<div>
+  {% for bookmark in bookmarks %}
+  <div class="card">
+    <h1>{{bookmark.title}}</h1>
+    <p1>From {{bookmark.subreddit}}</p1>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
