@@ -3,8 +3,9 @@ E.g. /account and /bookmarks"""
 
 from typing import Iterable
 
-from flask import Blueprint, render_template, request, jsonify, url_for, abort, flash
+from flask import Blueprint, render_template, request, jsonify, url_for, abort, flash, redirect
 from flask_login import current_user, login_required
+from werkzeug.security import check_password_hash, generate_password_hash
 import praw
 
 from .extensions import db, reddit
@@ -72,4 +73,22 @@ def create_bookmark():
     
 @account.route('/banana')
 def banana():
-    return jsonify(True)
+    return jsonify({'exists': True, 'egg_type': 'Easter',}) #Happy easter
+
+@account.route('/account')
+@login_required
+def acc_settings():
+    return render_template('account/account.html.jinja')
+
+@account.route('/account', methods=["POST"])
+@login_required
+def update_acc_settings():
+    old_pass = request.form.get('old_password')
+    new_pass = request.form.get('new_password')
+    if check_password_hash(current_user.password, old_pass):
+        current_user.password = generate_password_hash(password=new_pass)
+        db.session.commit()
+        flash('Password updated successfully', category='success')
+    else:
+        flash('Current password does not match', category='error')
+    return redirect(url_for('account.acc_settings'))

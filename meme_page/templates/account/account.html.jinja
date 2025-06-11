@@ -1,0 +1,20 @@
+{% extends "base.html.jinja" %}
+
+{% block body %}
+<h1>Account settings</h1>
+<form action="/account" method="post" class="settings">
+    <div style="display: block;">
+      <label for="old_password">Change password: </label>
+      <input style="display: inherit; margin-left: 0"class="auth" type="password" id="old_password" name="old_password" placeholder="Current password">
+      <input style="display: inherit; margin-left: 0"class="auth" type="password" id="new_password" name="new_password" placeholder="New password">
+      <button style="font-size: 20px;"  type="submit">Change Password</button>
+    </div>
+
+    {# <div style="padding-top: 40px;">
+        <button style="font-size: inherit;" type="submit" formaction="/settings"       >Save</button>
+        <button style="font-size: inherit;" type="submit" formaction="/"               >Save and exit</button>
+        <button style="font-size: inherit;" type="reset"                               >Reset</button>
+        <button style="font-size: inherit;" type="button" onclick="location.href = '/'">Exit without saving</button>
+    </div> #}
+</form>
+{% endblock %}

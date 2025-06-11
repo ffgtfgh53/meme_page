@@ -7,7 +7,7 @@
 	 - [ ] Delete bookmarks
  - [ ] Account
 	 - [ ] Settings stored in account
-	 - [ ] Change account password
+	 - [x] Change account password
 	 - [ ] NSFW verification for account
 		 - [ ] Restrict NSFW to verified accounts
 	 - [ ] Update profile page
