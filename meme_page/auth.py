@@ -28,7 +28,7 @@ def login():
 
     # User has correct login
     login_user(user, remember=remember)
-    flash("Logged in successfully!", category="info")
+    flash("Logged in successfully!", category="success")
     return redirect(url_for('account.profile'))
 
 
@@ -52,13 +52,15 @@ def signup():
         flash("Error: User already exists", category="error")
         return redirect(url_for('auth.signup'))
 
-    new_user = Users(username=username, password=generate_password_hash(password))
+    new_user = Users(username=username, 
+                     password=generate_password_hash(password))
 
     # add the new user to the database
     db.session.add(new_user)
     db.session.commit()
     
-    flash('Signed up successfuly! Please login using your new account', category='success')
+    flash('Signed up successfuly! Please login using your new account', 
+          category='success')
     return redirect(url_for('auth.login'))
 
 @auth.route('/logout')
@@ -66,7 +68,7 @@ def logout():
     if not current_user.is_authenticated:
         return redirect(url_for('auth.login'))
     logout_user()
-    flash("Logged out successfully")
+    flash("Logged out successfully", category='success')
     return redirect('/')
     
     

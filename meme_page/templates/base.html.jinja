@@ -46,27 +46,22 @@
   </nav>
 </header>
 
-  {% with messages = get_flashed_messages(with_categories=True) %}
-    {% if messages %}
-      {% for message in messages if not message[0] == 'error'%}
-      <dialog style="position: absolute; min-width: 50%;" open>
-        <form method="dialog" style="
-          flex-direction: row; 
-          justify-content: space-between;
-          {% if message[0] == 'success' %}
-          background-color: green;
-          {% endif %}">
-          <p1 style="margin: auto 0;">{{message[1]}}</p1>
-          <button style="padding: 0 10px; ">x</button>
-        </form>
-      </dialog>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+  {% if messages %}
+    {% for message in messages if not message[0] == 'error'%}
+    <dialog class="popup {{message[0]}}" style="z-index: 2" open>
+      <form method="dialog">
+        <p>{{message[1]}}</p>
+        <button><i class="fa-solid fa-xmark"></i></button>
+      </form>
+    </dialog>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
 
 
-  {% block body %}{% endblock %}
+{% block body %}{% endblock %}
 
 </body>
 </html>

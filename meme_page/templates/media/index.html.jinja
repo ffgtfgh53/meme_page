@@ -4,7 +4,7 @@
 {% endblock %}
 {% block body %}
 <div class="main">
-  <div id="bookmark-popup" style="display: none;">
+  <div id="bookmark-popup" class="popup success" style="display: none;">
     <p>Bookmark created successfully!</p>
     <button id="bookmark-popup-close"><i class="fa-solid fa-xmark"></i></button>
   </div>
@@ -20,12 +20,10 @@
   {% endblock %}
 </div>
 <div class="flexbox button-container" style="justify-content: space-evenly;">
-    <a>
-        <button onclick="createBookmark()">Bookmark <i class="fa-solid fa-bookmark"></i></button>
-    </a>
-    <a>
-        <button onclick="location = location.pathname + location.hash">New post</button>
-    </a>
+  {% if current_user.is_authenticated %}
+  <button onclick="createBookmark()">Bookmark <i class="fa-solid fa-bookmark"></i></button>
+  {% endif %}
+  <button onclick="location = location.pathname + location.hash">New post</button>
 </div>
 <script>
   async function createBookmark() {

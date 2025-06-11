@@ -26,7 +26,7 @@ h1 {
   margin: 16px;
 }
 
-form {
+form.auth {
   font-size: 30px;
   display: flex; 
   justify-content:left; 
@@ -215,8 +215,7 @@ nav a:active + ul {
   margin-left: auto;
 }
 
-#bookmark-popup {
-  background-color: chartreuse;
+.popup {
   max-width: 1200px;
   margin: 0 auto;
   color: #000000;
@@ -229,7 +228,11 @@ nav a:active + ul {
   padding: 12px;
 }
 
-#bookmark-popup p {
+.success {
+  background-color: chartreuse;
+}
+
+.popup p {
   display: inline-block;
 }
 
