@@ -28,13 +28,13 @@
       <li><a href="/settings">Settings</a></li>
       <li style="margin-left:auto">
         {% if not current_user.is_authenticated %}
-          <a class="dropbtn" href="#">Account &#x25BC;</a>
+          <a class="dropbtn" href="#" onclick="this.focus()">Account <i class="fa fa-caret-down" aria-hidden="true"></i></a>
           <ul>
               <li><a href="/signup">Signup</a></li>
               <li><a href="/login">Login</a></li>
           </ul>
         {% else %}
-          <a class="dropbtn" href="#">{{current_user.username}} &#x25BC;</a>
+          <a class="dropbtn" href="#" onclick="this.focus()">{{current_user.username}} <i class="fa fa-caret-down" aria-hidden="true"></i></a>
           <ul>
               <li><a href="/profile">Profile</a></li>
               <li><a href="/account">Account settings</a></li>
