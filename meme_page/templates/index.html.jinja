@@ -8,15 +8,7 @@
     <p>Bookmark created successfully!</p>
     <button id="bookmark-popup-close"><i class="fa-solid fa-xmark"></i></button>
   </div>
-  <div class="title">
-    <a href="{{link}}" target="_blank">
-      Random post from r/{{subreddit}} 
-      <i class="fa-solid fa-up-right-from-square"></i>
-    </a>
-    <h2>{{title}}</h2>
-  </div>
-  {% block meme %}
-  <img src="{{meme}}" style="max-width: 90vw; max-height: 70vh;">
+  {% block full_meme %}
   {% endblock %}
 </div>
 <div class="flexbox button-container" style="justify-content: space-evenly;">
@@ -25,10 +17,11 @@
   {% endif %}
   <button onclick="location = location.pathname + location.hash">New post</button>
 </div>
+{% if current_user.is_authenticated %}
 <script>
   async function createBookmark() {
     let data = new FormData()
-    data.append('link', '{{link}}')
+    data.append('id', '{{id}}')
     const url = {{ url_for('account.create_bookmark')|tojson }};
     try {
       const response = await fetch(url, {
@@ -57,4 +50,5 @@
     }
   }
 </script>
+{% endif%}
 {% endblock %}

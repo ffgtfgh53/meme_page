@@ -6,7 +6,8 @@ class Users(db.Model, UserMixin):
     __tablename__ = "USERS"
     id = db.Column("ID", db.Integer, primary_key=True) 
     username = db.Column("USERNAME", db.String(100), unique=True)
-    password = db.Column("PASSWORD", db.String(200), nullable=False)
+    #Password hash is exactly 162 chars in length
+    password = db.Column("PASSWORD", db.String(162), nullable=False)
     nsfw = db.Column("SHOW_NSFW", db.Boolean)
     bookmarks = db.relationship("Posts", secondary="BOOKMARKS", 
                                 back_populates='users')
@@ -15,9 +16,8 @@ class Users(db.Model, UserMixin):
 
 class Posts(db.Model):
     __tablename__ = 'POSTS'
-    id = db.Column("ID", db.Integer, primary_key=True)
-    #Password hash is exactly 162 chars in length
-    link = db.Column("LINK", db.String(162), unique=True, nullable=False)
+    id = db.Column("ID", db.String, primary_key=True)
+    # link = 'https://redd.it/' + id
     subreddit = db.Column("SUBREDDIT", db.String(50))
     nsfw = db.Column("NSFW", db.Boolean)
     users = db.relationship("Users", secondary="BOOKMARKS", 

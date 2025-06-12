@@ -5,13 +5,14 @@
   {% for bookmark in bookmarks %}
   <div class="flexbox card">
     <div>
-      <a href="{{bookmark.link}}" target="_blank">
-        {{bookmark.title}} 
-        <i class="fa-solid fa-up-right-from-square"></i>
+      <a href="/bookmarks/{{bookmark.id}}" target="_blank">
+        {{bookmark.title}}
       </a>
       <p>From r/{{bookmark.subreddit}}</p>
     </div>
-    <img class="thumbnail" src="{{bookmark.thumbnail}}">
+    <a href="/bookmarks/{{bookmark.id}}" target="_blank" class="right">
+      <img class="thumbnail" src="{{bookmark.thumbnail}}" loading="lazy">
+    </a>
   </div>
   {% endfor %}
 </div>

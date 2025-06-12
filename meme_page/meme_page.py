@@ -3,6 +3,7 @@ from random import choice
 
 from flask import Blueprint, render_template, request, session, redirect, flash
 from flask_login import LoginManager, current_user
+from praw.models import Submission
 
 from .extensions import reddit
 
@@ -43,6 +44,62 @@ def set_args(request):
 embed_dimensions_pattern = compile(r'(width|height)=\"\d+\"')
 whitespace = compile(r' +')
 
+def render_meme(submission: Submission, 
+                parent: str='index.html.jinja',
+                post_type: str='Random', 
+                subreddit: str=''):
+    """Return a rendered template using the submission.
+
+    parent determines which template it extends.
+
+    type determines the title used when rendering.
+
+    DOES NOT WORK WITH GALLERY!
+    
+    """
+    try:
+        if submission.is_gallery: 
+            raise NotImplementedError('Cannot render gallery')
+    except AttributeError:
+        pass
+    if subreddit == '':
+        subreddit = submission.subreddit.display_name
+    common_kwargs = { #For unpacking in render_template
+                    'subreddit':subreddit, 
+                    'title':submission.title, 
+                    'id': submission.id,
+                    'post_type': post_type.capitalize(),
+                    'parent': parent,}
+    if submission.media:
+        if submission.is_video:
+            #idk why im using fallback url but ok
+            return render_template(
+                'media/video.html.jinja', 
+                meme=submission.media['reddit_video']['fallback_url'], 
+                **common_kwargs)
+        elif submission.media.get('oembed', False):
+            #Submission is embed :cry:
+            def resize(match):
+                return ('width = "100%"' if (match.group(1) == "width")
+                        else 'height = "70%"')
+            return render_template(
+                'media/embed.html.jinja',
+                embed=sub(embed_dimensions_pattern, 
+                            resize,
+                            submission.media['oembed']['html']),
+                **common_kwargs)
+    elif submission.is_self:
+        return render_template(
+            "media/embed.html.jinja",
+            embed=submission.selftext_html,
+            **common_kwargs)
+    else:
+        #if is image
+        return render_template(
+            'media/image.html.jinja', 
+            meme=submission.url, 
+            **common_kwargs)
+
 def get_meme(failed:int=0):
 
     global default_subreddits
@@ -76,39 +133,10 @@ def get_meme(failed:int=0):
             #idk how to implement gallery
             #Arrow keys???
             #besides gallery typically not memes
-        common_kwargs = { #For unpacking in render_template
-                'subreddit':subreddit_display_name, 
-                'title':submission.title, 
-                'link':'https://reddit.com' + submission.permalink}
-        if submission.media:
-            if submission.is_video:
-                #idk why im using fallback url but ok
-                return render_template(
-                    'media/video.html.jinja', 
-                    meme=submission.media['reddit_video']['fallback_url'], 
-                    **common_kwargs)
-            elif submission.media.get('oembed', False):
-                #Submission is embed :cry:
-                def resize(match):
-                    return ('width = "100%"' if (match.group(1) == "width")
-                            else 'height = "70%"')
-                return render_template(
-                    'media/embed.html.jinja',
-                    embed=sub(embed_dimensions_pattern, 
-                                resize,
-                                submission.media['oembed']['html']),
-                    **common_kwargs)
-        elif submission.is_self:
-            return render_template(
-                "media/embed.html.jinja",
-                embed=submission.selftext_html,
-                **common_kwargs)
-        else:
-            #if is image
-            return render_template(
-                'media/index.html.jinja', 
-                meme=submission.url, 
-                **common_kwargs)
+        return render_meme(submission=submission, 
+                           post_type='Random', 
+                           subreddit=subreddit_display_name,
+                           parent='index.html.jinja')
 
 @app.route('/',methods=["GET", "POST"])
 def index():

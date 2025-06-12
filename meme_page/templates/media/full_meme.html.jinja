@@ -1,0 +1,14 @@
+{% extends parent %}
+
+{% block full_meme %}
+  <div class="title">
+    <a href="https://redd.it/{{id}}" target="_blank">
+      {{post_type}} post from r/{{subreddit}} 
+      <i class="fa-solid fa-up-right-from-square"></i>
+    </a>
+    <h2>{{title}}</h2>
+  </div>
+  {% block meme %}
+  <img src="{{meme}}" style="max-width: 90vw; max-height: 70vh;">
+  {% endblock meme %}
+{% endblock full_meme %}

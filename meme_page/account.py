@@ -10,6 +10,7 @@ import praw
 
 from .extensions import db, reddit
 from .models import Posts, Bookmarks, Users
+from .meme_page import render_meme
 
 account = Blueprint('account', __name__)
 
@@ -22,7 +23,7 @@ def profile():
 @login_required
 def bookmark_page():
     def bookmark_from_url(bookmark: Posts):
-        post = reddit.submission(url=bookmark.link)
+        post = reddit.submission(id=bookmark.id)
         from praw.models import Submission
         try:
             thumbnail = post.thumbnail #may return '' or error
@@ -37,32 +38,28 @@ def bookmark_page():
             'thumbnail': thumbnail,
             'title': post.title, 
             'nsfw': bookmark.nsfw, 
-            'link': bookmark.link}
+            'id': bookmark.id}
     bookmarks = [bookmark_from_url(bookmark) for bookmark in current_user.bookmarks]
     return render_template('account/bookmarks.html.jinja', bookmarks=bookmarks)
 
 @account.route('/bookmarks', methods=["POST"])
 @login_required
 def create_bookmark():
-    link = request.form.get('link')
-    if not link: 
-        return jsonify({'error': 'No link specified'})
-    post = Posts.query.filter_by(link=link).first()
+    post_id = request.form.get('id')
+    if not post_id: 
+        return jsonify({'error': 'No id specified'})
+    post = Posts.query.filter_by(id=post_id).first()
     if not post: #Post not in table yet
-        reddit_post = reddit.submission(url=link)
-        subreddit = reddit_post.subreddit.display_name
-        nsfw = reddit_post.over_18
-        parameters = {'link': link, 
-                      'subreddit': subreddit,
-                      'nsfw': nsfw,
+        reddit_post = reddit.submission(id=post_id)
+        parameters = {'id': post_id,
+                      'subreddit': reddit_post.subreddit.display_name,
+                      'nsfw': reddit_post.over_18,
                       }
         new_post = Posts(**parameters)
         db.session.add(new_post)
         db.session.commit()
         post_id = new_post.id
-    else:
-        post_id = post.id
-    #Post is now in database
+        #Post is now in database
     new_bookmark = Bookmarks(userid=current_user.id, postid=post_id)
     try:
         db.session.add(new_bookmark)
@@ -70,6 +67,12 @@ def create_bookmark():
     except:
         return jsonify({'error': 'Bookmark already exists'})
     return jsonify({'error': False, })
+
+@account.route('/bookmarks/<post_id>')
+def render_bookmark(post_id: str):
+    return render_meme(reddit.submission(id=post_id),
+                       post_type='Bookmarked',
+                       parent='account/bookmark.html.jinja')
     
 @account.route('/banana')
 def banana():
