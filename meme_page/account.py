@@ -39,7 +39,14 @@ def bookmark_page():
             'title': post.title, 
             'nsfw': bookmark.nsfw, 
             'id': bookmark.id}
-    bookmarks = [bookmark_from_url(bookmark) for bookmark in current_user.bookmarks]
+    bookmarks = []
+    for bookmark in current_user.bookmarks:
+        try:
+            bookmarks.append(bookmark_from_url(bookmark))
+        except:
+            continue #graceful handling of errors
+
+    #bookmarks = [bookmark_from_url(bookmark) for bookmark in current_user.bookmarks]
     return render_template('account/bookmarks.html.jinja', bookmarks=bookmarks)
 
 @account.route('/bookmarks', methods=["POST"])
@@ -67,6 +74,20 @@ def create_bookmark():
     except:
         return jsonify({'error': 'Bookmark already exists'})
     return jsonify({'error': False, })
+
+@account.route('/deletebookmark', methods=["POST"])
+def delete_bookmark():
+    post_id = request.form.get('id')
+    if not post_id: 
+        return jsonify({'error': 'No id specified'})
+    bookmark = Bookmarks.query.filter_by(postid=post_id, 
+                    userid=current_user.id)
+    if bookmark.first() is None:
+        return jsonify({'error': 'Bookmark does not exist'})
+    bookmark.delete()
+    db.session.commit()
+    return jsonify({'error': False, })
+    
 
 @account.route('/bookmarks/<post_id>')
 def render_bookmark(post_id: str):

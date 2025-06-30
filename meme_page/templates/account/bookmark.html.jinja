@@ -1,9 +1,47 @@
 {% extends 'base.html.jinja' %}
 
 {% block body %}
+  <div id="bookmark-popup" class="popup success" style="display: none;">
+    <p>Bookmark deleted successfully!</p>
+    <button id="bookmark-popup-close"><i class="fa-solid fa-xmark"></i></button>
+  </div>
   {% block full_meme %}{% endblock %}
 
-  <div>
-    <button><a href="/bookmarks" style="text-decoration: none;">Back to bookmarks</a></button>
+  <div class="flexbox button-container" style="justify-content: space-evenly;">
+    <button><a href="/bookmarks" style="text-decoration: none;color:black">Back to bookmarks</a></button>
+    <button onclick="deleteBookmark()">Delete bookmark</button>
   </div>
+
+  <script>
+    async function deleteBookmark() {
+      let data = new FormData()
+      data.append('id', '{{id}}')
+      const url = {{ url_for('account.delete_bookmark')|tojson }};
+      try {
+        const response = await fetch(url, {
+                            "method": "POST",
+                            "body": data
+        });
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+
+        const json = await response.json();
+        console.log(json);
+        if (!json.error) {
+          const popup = document.getElementById('bookmark-popup');
+          const popupClose = document.getElementById('bookmark-popup-close');
+          popup.style.display = 'block';
+          popup.style.zIndex = 10;
+          function closePopup() {
+            popup.style.display = 'none';
+            popup.style.zIndex = 0;
+          }
+          popupClose.addEventListener("click", closePopup);
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+  </script>
 {% endblock %}

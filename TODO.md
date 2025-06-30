@@ -4,7 +4,7 @@
  - [ ] Bookmarks
 	 - [x] Create bookmark
 	 - [x] View bookmarks
-	 - [ ] Delete bookmarks
+	 - [x] Delete bookmarks
  - [ ] Account
 	 - [ ] Settings stored in account
 	 - [x] Change account password
