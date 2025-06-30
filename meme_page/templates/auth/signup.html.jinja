@@ -5,8 +5,8 @@
     <h1 class="auth">Signup</h1>
     <form action="/signup" method="post" class="auth">
             <div style="margin: 20% 0;">
-                <input class="auth" type="text" id="user" name="user" placeholder="Username" autofocus="">
-                <input class="auth" type="password" id="pass" name="pass" placeholder="Password">
+                <input class="auth" type="text" id="user" name="user" placeholder="Username" autofocus="" required="" minlength="4">
+                <input class="auth" type="password" id="pass" name="pass" placeholder="Password" required="" minlength="8">
                 <label class="checkbox" style="font-size: large; margin: 10px;border-radius: 2px;">
                     {#Empty label to provide same height for signup and login pages#}
                 </label>
@@ -16,4 +16,5 @@
     <br>
     <a href="/login">Login instead</a>
 </div>
+<script src="{{url_for('static', filename='scripts/input.js')}}"></script>
 {% endblock %}

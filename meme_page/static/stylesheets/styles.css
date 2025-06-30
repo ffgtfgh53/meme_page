@@ -84,9 +84,14 @@ input.auth {
   width: 252px;
 }
 
+input.auth:user-invalid {
+  border:dotted red;
+}
+
 :root {
     --link-color: aliceblue;
     --link-active-color: rgb(255, 63, 63);
+    --warning-color: crimson;
 }
 
 nav {
@@ -166,9 +171,6 @@ nav a:active + ul {
 
 .float-left {
   margin: 0 0 0 auto;
-}
-
-.button-container button {
   background-color: #333;
   color: aliceblue;
   border: 2px ridge #ddd;
@@ -236,4 +238,16 @@ nav a:active + ul {
 
 div.main {
   position: relative;
+}
+
+.warning {
+  color: var(--warning-color);
+}
+
+button.warning {
+  background-color: var(--warning-color);
+  color: white;
+  border-radius: 5px;
+  border: firebrick 2px inset;
+  font-size: 20px;
 }
