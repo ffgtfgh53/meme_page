@@ -10,4 +10,4 @@ if lines[3] == "user_agent=USERAGENT":
     raise NotImplementedError('Please add appropiate user agent')
 
 if __name__ == "__main__":
-    create_app().run(port=8080)
+    create_app().run(port=8080, debug=True)

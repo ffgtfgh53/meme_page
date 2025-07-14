@@ -1,8 +1,7 @@
-from re import sub, compile
 from random import choice
+from re import sub, compile
 
-from flask import Blueprint, render_template, request, session, redirect, flash
-from flask_login import LoginManager, current_user
+from flask import Blueprint, flash, redirect, render_template, request, session
 from praw.models import Submission
 
 from .extensions import reddit
@@ -26,16 +25,20 @@ def set_args(request):
         args = request.args
     else: 
         args = request.form
-    if 'init_session_vars' not in session: init_session_vars()
-
-    if 'subreddit' in args: session['src'] = args['subreddit']
-
-    if 'change_selfpost_state' in args: session['return_selfpost'] = False
+    if 'init_session_vars' not in session: 
+        init_session_vars()
+    if 'subreddit' in args: 
+        if args['subreddit'] == '':
+            session['src'] = ' '.join(default_subreddits)
+        else:
+            session['src'] = args['subreddit']
+    if 'change_selfpost_state' in args: 
+        session['return_selfpost'] = False
     if 'return_selfpost' in args: 
         session['return_selfpost'] = (args["return_selfpost"].lower() == "true")
         #true, True, TRUE, trUE and tRuE all return True
-
-    if 'change_nsfw_state' in args: session['nsfw'] = False
+    if 'change_nsfw_state' in args: 
+        session['nsfw'] = False
     if 'plsplsplsimdesperateshowmensfw' in args:
         session['nsfw'] = args["plsplsplsimdesperateshowmensfw"].lower() == "true" 
     
@@ -101,9 +104,6 @@ def render_meme(submission: Submission,
             **common_kwargs)
 
 def get_meme(failed:int=0):
-
-    global default_subreddits
-
     if failed > 6: 
         error_msg = (
             r"Error: Valid post cannot be found in the specified subreddit(s).\n"
@@ -119,24 +119,23 @@ def get_meme(failed:int=0):
         src = sub(whitespace, ' ', session['src']).split(' ')
     #At this stage session['src'] will be a list of possible subreddits
     subreddit_display_name = choice(src)
-    for submission in reddit.subreddit(subreddit_display_name).random_rising(limit=1):
-    
-        if submission.over_18 and not session['nsfw']:
-            print("\nNSFW\n")
-            return get_meme(failed=failed+1)
-        elif submission.is_self and not session['return_selfpost']: 
-            print("\nisself\n")
-            return get_meme(failed=failed+1)
-        elif hasattr(submission, 'is_gallery'):
-            print("\nisgallery\n")
-            return get_meme()
-            #idk how to implement gallery
-            #Arrow keys???
-            #besides gallery typically not memes
-        return render_meme(submission=submission, 
-                           post_type='Random', 
-                           subreddit=subreddit_display_name,
-                           parent='index.html.jinja')
+    submission = next(reddit.subreddit(subreddit_display_name).random_rising(limit=1))
+    if submission.over_18 and not session['nsfw']:
+        print("\nNSFW\n")
+        return get_meme(failed=failed+1)
+    elif submission.is_self and not session['return_selfpost']: 
+        print("\nisself\n")
+        return get_meme(failed=failed+1)
+    elif hasattr(submission, 'is_gallery'):
+        print("\nisgallery\n")
+        return get_meme()
+        #idk how to implement gallery
+        #Arrow keys???
+        #besides gallery typically not memes
+    return render_meme(submission=submission, 
+                        post_type='Random', 
+                        subreddit=subreddit_display_name,
+                        parent='index.html.jinja')
 
 @app.route('/',methods=["GET", "POST"])
 def index():

@@ -7,3 +7,7 @@ secrets.txt
 config.py
 
 activate
+
+pyproject.toml
+
+meme_page/__pycache__/*

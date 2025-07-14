@@ -2,8 +2,6 @@ from flask import Flask
 from flask_login import LoginManager
 
 from .extensions import db
-from .models import *
-
 
 def create_app():
     app = Flask(__name__)
@@ -31,3 +29,4 @@ def create_app():
     
 with create_app().app_context():
     db.create_all()
+    #creates database if does not exist
