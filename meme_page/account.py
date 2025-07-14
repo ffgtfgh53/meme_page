@@ -107,9 +107,11 @@ def acc_settings():
 @account.route('/account', methods=["POST"])
 @login_required
 def update_acc_settings():
-    old_pass = request.form.get('old_password')
-    new_pass = request.form.get('new_password')
-    if check_password_hash(current_user.password, old_pass):
+    old_pass = request.form.get('old_password', '', str)
+    new_pass = request.form.get('new_password', '', str)
+    if not old_pass or not new_pass:
+        flash('Please fill in all password fields')
+    elif check_password_hash(current_user.password, old_pass):
         current_user.password = generate_password_hash(password=new_pass)
         db.session.commit()
         flash('Password updated successfully', category='success')

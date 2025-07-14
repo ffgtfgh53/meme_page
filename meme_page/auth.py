@@ -19,8 +19,8 @@ def login_page():
 @auth.route('/login',methods=["POST"])
 def login():
     # login code goes here
-    username = request.form.get('user', False, str)
-    password = request.form.get('pass', False, str)
+    username = request.form.get('user', '', str)
+    password = request.form.get('pass', '', str)
     remember = True if request.form.get('remember') else False
 
     user = Users.query.filter_by(username=username).first()
@@ -43,8 +43,8 @@ def signup_page():
 @auth.route('/signup', methods=["POST"])
 def signup():
         # code to validate and add user to database goes here
-    username = request.form.get('user',False,str)
-    password = request.form.get('pass', False, str)
+    username = request.form.get('user', '', str)
+    password = request.form.get('pass', '', str)
     if not (username or password): #username/password is null or GET request
         return render_template('auth/login.html.jinja')
     #following tests should have been verified client-side
