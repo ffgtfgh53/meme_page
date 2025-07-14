@@ -10,4 +10,6 @@ activate
 
 pyproject.toml
 
-meme_page/__pycache__/*
+meme_page/__pycache__/
+
+instance/
