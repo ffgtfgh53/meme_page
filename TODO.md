@@ -1,7 +1,7 @@
 # TODO
 ## Important
 
- - [ ] Bookmarks
+ - [x] Bookmarks
 	 - [x] Create bookmark
 	 - [x] View bookmarks
 	 - [x] Delete bookmarks
@@ -10,7 +10,7 @@
 	 - [x] Change account password
 	 - [ ] NSFW verification for account
 		 - [ ] Restrict NSFW to verified accounts
-	 - [ ] Update profile page
+	 - [x] Update profile page
  - [x] Better CSS
  ## Other ideas:
  - Sort bookmarks
