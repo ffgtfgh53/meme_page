@@ -15,6 +15,8 @@ def create_app():
     app.register_blueprint(auth_blueprint)
     from .account import account as account_blueprint
     app.register_blueprint(account_blueprint)
+    from .admin import admin as admin_blueprint
+    app.register_blueprint(admin_blueprint)
     
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'

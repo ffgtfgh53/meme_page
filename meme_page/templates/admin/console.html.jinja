@@ -1,0 +1,15 @@
+{% extends "base.html.jinja" %}
+{% block head %}<title>Admin Console</title>{% endblock %}
+
+{% block body %}
+<form target="_blank" method="post">
+<h1>View contents of table</h1>
+<input type="hidden" name="action" value="view">
+<select name="table">
+    <option name="users" value="users">users</option>
+    <option name="posts" value="posts">posts</option>
+    <option name="bookmarks" value="bookmarks">bookmarks</option>
+</select>
+<button type="submit">view table</button>
+</form>
+{% endblock %}

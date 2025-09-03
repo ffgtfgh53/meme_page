@@ -1,0 +1,21 @@
+{% extends "base.html.jinja"%}
+
+{% block head %}
+<title>{{title}}</title>
+{% endblock  %}
+
+{% block body %}
+<table>
+    <tr>
+    {% for i in header %}<th>{{i}}</th>{% endfor %}
+    </tr>
+
+    {% for row in data %}
+    <tr>
+        {% for item in row %}
+            <td>{{item}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock body %}
