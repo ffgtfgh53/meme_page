@@ -1,0 +1,18 @@
+{% extends "base.html.jinja" %}
+
+{% block head %}
+<title>Editing '{{table}}'</title>
+{% endblock head %}
+
+{% block body %}
+<h1>Editing record with id '{{id}}' in table '{{table}}'</h1>
+<form target="_self" method="post" action="/adminconsole/edit">
+    {% for column, value in data %}
+        <label>{{column}}: <input type="text" value="{{value}}" name="{{column}}"></label>
+        <br>
+    {% endfor %}
+        <input type="hidden" name="id" value="{{id}}">
+        <input type="hidden" name="table" value="{{table}}">
+    <button type="submit">edit</button>
+</form>
+{% endblock body %}

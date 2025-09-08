@@ -26,7 +26,7 @@ class Posts(db.Model):
     users = db.relationship("Users", secondary="BOOKMARKS", 
                             back_populates='bookmarks')
     def __repr__(self):
-        return f"<Posts {self.id=} {self.link=}>"
+        return f"<Posts {self.id=}>"
     
     def __iter__(self):
         return (self.id, self.subreddit, self.nsfw).__iter__()

@@ -6,10 +6,24 @@
 <h1>View contents of table</h1>
 <input type="hidden" name="action" value="view">
 <select name="table">
-    <option name="users" value="users">users</option>
-    <option name="posts" value="posts">posts</option>
-    <option name="bookmarks" value="bookmarks">bookmarks</option>
+    <option value="users">users</option>
+    <option value="posts">posts</option>
+    <option value="bookmarks">bookmarks</option>
 </select>
 <button type="submit">view table</button>
+</form>
+
+<form target="_blank" method="post">
+<h1>Edit contents of table</h1>
+<input type="hidden" name="action" value="edit">
+<select name="table">
+    <option value="users">users</option>
+    <option value="posts">posts</option>
+    <!--bookmarks only add or delete, no edit-->
+</select>
+<label>
+    ID: <input type="text" name="id" id="edit_id">
+</label>
+<button type="submit">Edit</button>
 </form>
 {% endblock %}
