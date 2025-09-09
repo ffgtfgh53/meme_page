@@ -3,18 +3,18 @@
 
 {% block body %}
 <form target="_blank" method="post">
-<h1>View contents of table</h1>
+<h1>View records in table</h1>
 <input type="hidden" name="action" value="view">
 <select name="table">
     <option value="users">users</option>
     <option value="posts">posts</option>
     <option value="bookmarks">bookmarks</option>
 </select>
-<button type="submit">view table</button>
+<button type="submit">view records</button>
 </form>
 
 <form target="_blank" method="post">
-<h1>Edit contents of table</h1>
+<h1>Edit record from table</h1>
 <input type="hidden" name="action" value="edit">
 <select name="table">
     <option value="users">users</option>
@@ -25,5 +25,14 @@
     ID: <input type="text" name="id" id="edit_id">
 </label>
 <button type="submit">Edit</button>
+</form>
+
+<form target="_blank" method="get" action="/adminconsole/delete">
+<h1>Delete</h1>
+<input type="hidden" name="action" value="delete">
+<label>User ID: <input type="number" name="user_id"></label><br>
+<label>Post ID: <input type="text" name="post_id"></label>
+<p>UserID to delete from Users, <br>PostID to delete from Posts, <br>both to delete from Bookmarks</p>
+<button type="submit">Delete</button>
 </form>
 {% endblock %}

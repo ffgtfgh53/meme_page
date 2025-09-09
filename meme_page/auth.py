@@ -66,7 +66,8 @@ def signup():
         return redirect(url_for('auth.signup'))
 
     new_user = Users(username=username, 
-                     password=generate_password_hash(password))
+                     password=generate_password_hash(password),
+                     nsfw=False)
 
     # add the new user to the database
     db.session.add(new_user)

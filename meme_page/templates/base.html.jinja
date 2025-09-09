@@ -12,9 +12,7 @@
   {% with errors = get_flashed_messages(category_filter="error") %}
     {% if errors %}
       {% for error in errors %}
-      <script>
-        alert("{{error}}")
-      </script>
+      <script>alert("{{error}}")</script>
       {% endfor %}
     {% endif %}
   {% endwith %}
@@ -38,6 +36,9 @@
           <ul>
               <li><a href="/profile">Profile</a></li>
               <li><a href="/account">Account settings</a></li>
+              {% if current_user.username == 'admin' %}
+                <li><a href="/adminconsole">Admin Console</a></li>
+              {% endif %}
               <li><a href="/bookmarks">Bookmarks</a></li>
               <li><a href="javascript:confirmLogout()">Logout</a></li>
           </ul>
