@@ -28,11 +28,21 @@
 </form>
 
 <form target="_blank" method="get" action="/adminconsole/delete">
-<h1>Delete</h1>
+<h1>Delete record from table</h1>
 <input type="hidden" name="action" value="delete">
 <label>User ID: <input type="number" name="user_id"></label><br>
 <label>Post ID: <input type="text" name="post_id"></label>
 <p>UserID to delete from Users, <br>PostID to delete from Posts, <br>both to delete from Bookmarks</p>
-<button type="submit">Delete</button>
+<button class="warning" type="submit">Delete</button>
+</form>
+
+<form target="_self" method="post">
+<h1>Login as user by UserID</h1>
+<input type="hidden" name="action" value="login">
+<label>User ID: <input type="number" name="id"></label>
+<button type="submit">Login</button>
+<p>Login as any user without password<br>
+Useful for creating/deleting bookmarks</p>
+<p>Note: this will log you out of this admin account</p>
 </form>
 {% endblock %}

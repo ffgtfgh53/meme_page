@@ -7,7 +7,7 @@ Subreddit can be specified in settings.
 Supported post types:
 - Images (including GIFs)
 - Videos
-- YouTube Embeds
+- Embeds (Includes YouTube, may not work 100%)
 - Selfpost/text-only (default off)
 - NSFW content (default off)
 
@@ -74,6 +74,19 @@ The server will run on port 8080.
 
 This is a development server and is not meant for real use.
 
+## Admin console
+
+Before deploying the webapp, please create an admin account with username 'admin' as admin privileges are currently hardcoded to the username. 
+
+Admin console allows CRUD operations (Create, Read, Update, Delete).
+
+Updating records is not recommended as it may result in inaccurate data
+
+Currently creating user and bookmarks requires signing up and creating a bookmark on that account respectively. Creating posts is not neccessary as it is automatically created for bookmarks with new PostIDs. Technically the Posts table is redundant as it is always possible to query the data from Reddit along with the image and title.
+
+Warning: It is possible to delete the admin account. If accidentally deleted, make a new admin account with the same username
+
+
 # Gallery
 
 ### Bookmarks
@@ -84,3 +97,6 @@ This is a development server and is not meant for real use.
 
 ### Main page
 ![main page screenshot](./gallery/3.png)
+
+### Admin console
+![admin console scrrenshot](./gallery/4.png)

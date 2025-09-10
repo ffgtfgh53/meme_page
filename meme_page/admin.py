@@ -1,13 +1,16 @@
-from flask import Blueprint, render_template, request, redirect, url_for, current_app
-from flask_login import current_user, login_required
+from flask import Blueprint, render_template, request, redirect, url_for
+from flask_login import current_user, login_required, login_user
 
 from .models import *
 from .extensions import db
 
 admin = Blueprint('admin', __name__)
 
+admin_usernames = ['admin']
+
 #To check admin: 
-#if current_user.username != 'admin': return "Unauthorised", 401
+#if current_user.username not in admin_usernames: return "Unauthorised", 401
+#idk how to make decorator functions work like @login_required
 
 def view_table(table: str):
     if table == 'users':
@@ -43,7 +46,7 @@ def get_record(table: str, record_id: str|tuple[str,str], template: str):
 @admin.route('/adminconsole', methods=['POST'])
 @login_required
 def adminconsole_post():
-    if current_user.username != 'admin': return "Unauthorised", 401
+    if current_user.username not in admin_usernames: return "Unauthorised", 401
     action = request.form.get('action', '', type=str)
     table = request.form.get('table', '', type=str).lower()
     record_id = request.form.get('id', '', type=str).lower()
@@ -52,25 +55,31 @@ def adminconsole_post():
     elif action == 'edit':
         return get_record(table, record_id, 
             template='admin/editrecord.html.jinja')
+    elif action == 'login':
+        user = Users.query.filter_by(id=record_id).first()
+        if not user:
+            return f"Error: no user with ID {record_id} found"
+        login_user(user)
+        return redirect(url_for('account.profile'))
     else:
         return f"invalid action '{action}'"
 
 @admin.route('/adminconsole', methods=['GET'])
 @login_required
 def adminconsole_get():
-    if current_user.username != 'admin': return "Unauthorised", 401
+    if current_user.username not in admin_usernames: return "Unauthorised", 401
     return render_template('admin/console.html.jinja')
 
 @admin.route('/adminconsole/view/<table>')
 @login_required
 def view(table):
-    if current_user.username != 'admin': return "Unauthorised", 401
+    if current_user.username not in admin_usernames: return "Unauthorised", 401
     return view_table(table)
 
 @admin.route('/adminconsole/edit', methods=['POST'])
 @login_required
 def edit():
-    if current_user.username != 'admin': return "Unauthorised", 401
+    if current_user.username not in admin_usernames: return "Unauthorised", 401
     data = dict(request.form)
     print(data)
     table = data.pop('table', '')
@@ -108,7 +117,7 @@ def edit():
 @admin.route('/adminconsole/delete', methods=['GET'])
 @login_required
 def confirm_delete():
-    if current_user.username != 'admin': return "Unauthorised", 401
+    if current_user.username not in admin_usernames: return "Unauthorised", 401
     userid = request.args.get('user_id', '', int)
     postid = request.args.get('post_id', '', str)
     if userid and postid:
@@ -137,7 +146,7 @@ def confirm_delete():
 @admin.route('/adminconsole/delete', methods=['POST'])
 @login_required
 def delete():
-    if current_user.username != 'admin': return "Unauthorised", 401
+    if current_user.username not in admin_usernames: return "Unauthorised", 401
     userid = request.form.get('user_id', '', str)
     postid = request.form.get('post_id', '', str)
     print(userid, postid)
