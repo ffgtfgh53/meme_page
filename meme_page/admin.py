@@ -94,21 +94,21 @@ def edit():
         nsfw = True
     else:
         return 'bad data: nsfw must be true or false', 400
-    session = db.session()
     if table == 'users':
-        session.query(Users).filter(Users.id == record_id).update({
-            Users.username: data['username'],
-            Users.nsfw: nsfw,
-            Users.password: data['password']}, 
+        db.session.query(Users).filter(Users.id == record_id).update({
+                Users.username: data['username'],
+                Users.nsfw: nsfw,
+                Users.password: data['password']}, 
             synchronize_session="fetch")
         #basically almost a sql statement
+        db.session.commit()
         return 'edit success'
     elif table == 'posts':
-        session.query(Posts).filter(Posts.id == record_id).update({
-            Posts.subreddit: data['subreddit'],
-            Posts.nsfw: nsfw}, 
+        db.session.query(Posts).filter(Posts.id == record_id).update({
+                Posts.subreddit: data['subreddit'],
+                Posts.nsfw: nsfw}, 
             synchronize_session="fetch")
-        session.commit()
+        db.session.commit()
         return 'edit success'
     else:
         return 'bad data: table not specified', 400

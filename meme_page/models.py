@@ -13,7 +13,6 @@ class Users(db.Model, UserMixin):
                                 back_populates='users')
     def __repr__(self):
         return f"<Users {self.id=} {self.username=}>"
-    
     def __iter__(self):
         return (self.id, self.username, self.password, self.nsfw).__iter__()
 
@@ -27,7 +26,6 @@ class Posts(db.Model):
                             back_populates='bookmarks')
     def __repr__(self):
         return f"<Posts {self.id=}>"
-    
     def __iter__(self):
         return (self.id, self.subreddit, self.nsfw).__iter__()
 
@@ -39,7 +37,6 @@ class Bookmarks(db.Model):
                        primary_key=True, index=True)
     def __repr__(self):
         return f"<Bookmarks {self.userid=} {self.postid=}"
-    
     def __iter__(self):
         return (self.userid, self.postid).__iter__()
 

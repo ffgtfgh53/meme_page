@@ -53,11 +53,11 @@ def render_meme(submission: Submission,
                 subreddit: str=''):
     """Return a rendered template using the submission.
 
-    parent determines which template it extends.
+    Does not work with gallery
 
-    type determines the title used when rendering.
+    :param parent: determines which template it extends.
 
-    DOES NOT WORK WITH GALLERY!
+    :param type: determines the title used when rendering.
     
     """
     try:
@@ -104,7 +104,7 @@ def render_meme(submission: Submission,
             **common_kwargs)
 
 def get_meme(failed:int=0):
-    if failed > 6: 
+    if failed > 7: 
         error_msg = (
             r"Error: Valid post cannot be found in the specified subreddit(s).\n"
             + "Please enter valid subreddit(s) that contain valid posts"
@@ -128,7 +128,7 @@ def get_meme(failed:int=0):
         return get_meme(failed=failed+1)
     elif hasattr(submission, 'is_gallery'):
         print("\nisgallery\n")
-        return get_meme()
+        return get_meme(failed=failed+1)
         #idk how to implement gallery
         #Arrow keys???
         #besides gallery typically not memes
@@ -149,6 +149,3 @@ def index():
 def settings():
     set_args(request)
     return render_template('settings/settings.html.jinja')
-
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0',port=8080, debug=True)

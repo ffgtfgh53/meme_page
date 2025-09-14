@@ -22,7 +22,7 @@ def profile():
 @account.route('/bookmarks')
 @login_required
 def bookmark_page():
-    def bookmark_from_url(bookmark: Posts):
+    def data_from_bookmark(bookmark: Posts) -> dict:
         post = reddit.submission(id=bookmark.id)
         from praw.models import Submission
         try:
@@ -42,11 +42,11 @@ def bookmark_page():
     bookmarks = []
     for bookmark in current_user.bookmarks:
         try:
-            bookmarks.append(bookmark_from_url(bookmark))
+            bookmarks.append(data_from_bookmark(bookmark))
         except:
             continue #graceful handling of errors
 
-    #bookmarks = [bookmark_from_url(bookmark) for bookmark in current_user.bookmarks]
+    #bookmarks = [data_from_bookmark(bookmark) for bookmark in current_user.bookmarks]
     return render_template('account/bookmarks.html.jinja', bookmarks=bookmarks)
 
 @account.route('/bookmarks', methods=["POST"])

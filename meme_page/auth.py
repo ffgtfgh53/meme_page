@@ -10,7 +10,7 @@ from .extensions import db
 
 auth = Blueprint('auth', __name__)
 
-userRegExp = compile(r"^\w+$")
+userRegExp = compile(r"^\w+$") #test validity of username
 
 @auth.route('/login')
 def login_page():
@@ -21,7 +21,7 @@ def login():
     # login code goes here
     username = request.form.get('user', '', str)
     password = request.form.get('pass', '', str)
-    remember = True if request.form.get('remember') else False
+    remember = bool(request.form.get('remember'))
 
     user = Users.query.filter_by(username=username).first()
 
@@ -84,5 +84,39 @@ def logout():
     logout_user()
     flash("Logged out successfully", category='success')
     return redirect('/')
-    
+
+#const
+nsfw_test_questions: dict[str, list[tuple[str, str, str]]] = {
+    'Animals': 
+        [
+            ('What does the ','fox', ' say'),
+            ("Beep beep I'm a ", 'sheep', ''),
+            ("RIP ", 'Harambe', " (1999–2016)"),
+        ],
+    'Songs':
+        [
+            ('Welcome to the ', 'Hotel', ' California'),
+            ('House of the ', 'Rising', ' Sun'),
+            ("They're ", 'Taking the Hobbits', ' to Isengard'),
+        ],
+    #If you're here just for the answers you deserve it atp
+    'Books':
+        [
+            ('Famous book by George Orwell: ', 'Animal', ' Farm'),
+        ],
+    'Memes':
+        [
+            ("Sir they've hit the ", 'second', ' tower'),
+            ("Rainbow Dash ", "cum jar", " incident")
+        ]
+    #TODO?
+}
+
+@auth.route('/nsfwtest', methods=["GET"])
+def nsfwtest():
+    if not current_user.is_authenticated:
+        return redirect(url_for('auth.login'))
+    return render_template('auth/nsfwtest.html.jinja')
+
+
     
