@@ -1,5 +1,4 @@
 # TODO
-## Important
 
  - [x] Bookmarks
 	 - [x] Create bookmark
@@ -10,8 +9,10 @@
 	 - [x] Change account password
 	 - [ ] NSFW verification for account
 		 - [ ] Restrict NSFW to verified accounts
-	 - [x] Update profile page
+	 - [ ] Update profile page
  - [x] Better CSS
+ - [ ] Prune Posts that are not referenced in Bookmarks
+     - [ ] Think of better way to use Posts table?
  ## Other ideas:
  - Sort bookmarks
 	 - By date added (ascend/descend)

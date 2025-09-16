@@ -56,6 +56,8 @@ Dependencies are listed in [requirements.txt](./requirements.txt).
 
 To install dependencies simply run `pip install -r requirements.txt`.
 
+Python 3.13.7 is used for this project, older versions may work but not guaranteed. (3.13 should work)
+
 ## WSGI
 
 If you have a WSGI server simply add these lines to wsgi.py:
