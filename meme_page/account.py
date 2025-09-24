@@ -1,15 +1,12 @@
 """For the routes associated with the user
 E.g. /account and /bookmarks"""
 
-from typing import Iterable
-
-from flask import Blueprint, render_template, request, jsonify, url_for, abort, flash, redirect
+from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from werkzeug.security import check_password_hash, generate_password_hash
-import praw
 
 from .extensions import db, reddit
-from .models import Posts, Bookmarks, Users
+from .models import Posts, Bookmarks
 from .meme_page import render_meme
 
 account = Blueprint('account', __name__)
@@ -24,14 +21,14 @@ def profile():
 def bookmark_page():
     def data_from_bookmark(bookmark: Posts) -> dict:
         post = reddit.submission(id=bookmark.id)
-        from praw.models import Submission
         try:
             thumbnail = post.thumbnail #may return '' or error
         except:
             thumbnail = ''
-        if not thumbnail: thumbnail = 'default' #If thumbnail is ''
+        if not thumbnail:
+            thumbnail = 'default' #If thumbnail is ''
         if thumbnail in ['default', 'self', 'nsfw']:
-            thumbnail = url_for('static', 
+            thumbnail = url_for('static',
                                 filename=f'thumbnails/{thumbnail}.png')
         return {
             'subreddit': bookmark.subreddit, 
@@ -45,15 +42,13 @@ def bookmark_page():
             bookmarks.append(data_from_bookmark(bookmark))
         except:
             continue #graceful handling of errors
-
-    #bookmarks = [data_from_bookmark(bookmark) for bookmark in current_user.bookmarks]
     return render_template('account/bookmarks.html.jinja', bookmarks=bookmarks)
 
 @account.route('/bookmarks', methods=["POST"])
 @login_required
 def create_bookmark():
     post_id = request.form.get('id')
-    if not post_id: 
+    if not post_id:
         return jsonify({'error': 'No id specified'})
     post = Posts.query.filter_by(id=post_id).first()
     if not post: #Post not in table yet
@@ -78,9 +73,9 @@ def create_bookmark():
 @account.route('/deletebookmark', methods=["POST"])
 def delete_bookmark():
     post_id = request.form.get('id')
-    if not post_id: 
+    if not post_id:
         return jsonify({'error': 'No id specified'})
-    bookmark = Bookmarks.query.filter_by(postid=post_id, 
+    bookmark = Bookmarks.query.filter_by(postid=post_id,
                     userid=current_user.id)
     if bookmark.first() is None:
         return jsonify({'error': 'Bookmark does not exist'})
@@ -94,10 +89,11 @@ def render_bookmark(post_id: str):
     return render_meme(reddit.submission(id=post_id),
                        post_type='Bookmarked',
                        parent='account/bookmark.html.jinja')
-    
+
 @account.route('/banana')
 def banana():
-    return jsonify({'exists': True, 'egg_type': 'Easter',}) #Happy easter
+    "Happy Easter"
+    return jsonify({'exists': True, 'egg_type': 'Easter',})
 
 @account.route('/account')
 @login_required

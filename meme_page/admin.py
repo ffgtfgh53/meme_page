@@ -1,14 +1,14 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import current_user, login_required, login_user
 
-from .models import *
+from .models import Users, Posts, Bookmarks
 from .extensions import db
 
 admin = Blueprint('admin', __name__)
 
 admin_usernames = ['admin']
 
-#To check admin: 
+#To check admin:
 #if current_user.username not in admin_usernames: return "Unauthorised", 401
 #idk how to make decorator functions work like @login_required
 
@@ -28,7 +28,8 @@ def view_table(table: str):
                 data=data, header=header, title=f'table {table}')
 
 def get_record(table: str, record_id: str|tuple[str,str], template: str):
-    if not record_id: return "error: id unspecified", 400
+    if not record_id:
+        return "error: id unspecified", 400
     if table == 'users':
         data = Users.query.filter_by(id=record_id).first()
     elif table == 'posts':
@@ -131,7 +132,8 @@ def confirm_delete():
         user = Users.query.filter_by(id=userid).first()
         if not user:
             return f"Error: no user with id {userid} found"
-        data = {'ID': userid, 'username': user.username, 'nsfw': user.nsfw, 'password': user.password}
+        data = {'ID': userid, 'username': user.username, 
+                'nsfw': user.nsfw, 'password': user.password}
     elif not userid and postid:
         table = 'Posts'
         post = Posts.query.filter_by(id=postid).first()

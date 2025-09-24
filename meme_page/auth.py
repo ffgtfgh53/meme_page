@@ -1,7 +1,7 @@
-from re import compile, match
+from re import compile as recompile, match
 
-from flask import Blueprint, request, render_template, redirect, url_for, flash
-from flask_login import login_user, logout_user, current_user
+from flask import Blueprint, flash, request, render_template, redirect, url_for
+from flask_login import current_user, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import Users
@@ -10,7 +10,7 @@ from .extensions import db
 
 auth = Blueprint('auth', __name__)
 
-userRegExp = compile(r"^\w+$") #test validity of username
+userRegExp = recompile(r"^\w+$") #test validity of username
 
 @auth.route('/login')
 def login_page():
@@ -21,7 +21,7 @@ def login():
     # login code goes here
     username = request.form.get('user', '', str)
     password = request.form.get('pass', '', str)
-    remember = bool(request.form.get('remember'))
+    remember = bool(request.form.get('remember')) #Any value will return True
 
     user = Users.query.filter_by(username=username).first()
 

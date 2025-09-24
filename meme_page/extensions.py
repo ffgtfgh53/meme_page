@@ -4,5 +4,5 @@ from praw import Reddit
 
 db = SQLAlchemy()
 
-reddit = Reddit("main bot")  
 #Requires praw.ini file 
+reddit = Reddit("main bot")
