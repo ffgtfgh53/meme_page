@@ -4,7 +4,7 @@ praw.ini
 
 secrets.txt
 
-config.py
+meme_page/config.py
 
 activate
 
